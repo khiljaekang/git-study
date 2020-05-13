@@ -1,35 +1,47 @@
-#MSE (MEAN SQUARED ERROR)
-#회귀지표이다
-#어떤 방법으로 예측한 Y와 실제 Y간의 차이를 나타내는 척도 
-#x와 y로 이루어진 데이터셋을 train과 test로 나웠을때, 나의 모델은 x_train 자료를 바탕으로 추정한다
-#중요한 것은 test MSE 며 목적 또한 test MSE가 최소인 방법을 택하는 것이다
-#mse를 언제, 어떻 때 사용하는 지를 아는 것이 중요하다
+import numpy as np
+
+x_train = np.array([1,2,3,4,5,6,7,8,9,10])
+y_train = np.array([1,2,3,4,5,6,7,8,9,10])
+x_test = np.array([11,12,13,14,15,16,17,18,19,20])
+y_test = np.array([11,12,13,14,15,16,17,18,19,20])
+x_pred = np.array([21,22,23])
+
+from keras.models import Sequential
+from keras.layers import Dense
+
+model = Sequential()
+
+model.add(Dense(5, input_dim=1))
+model.add(Dense(10))
+model.add(Dense(15))
+model.add(Dense(20))
+model.add(Dense(25))
+model.add(Dense(300))
+model.add(Dense(200))
+model.add(Dense(100))
+model.add(Dense(50))
+model.add(Dense(30))
+model.add(Dense(20))
+model.add(Dense(1))
+
+model.compile(loss='mse', optimizer='adam', metrics=['mse'])
+model.fit(x_train, y_train, epochs=100, batch_size=1)
+
+loss, mse = model.evaluate(x_test, y_test, batch_size=1)
+print("loss : ", loss)
+print("mse: ", mse)
+
+y_predict = model.predict(x_test)
+print(y_predict)
+
+from sklearn.metrics import mean_squared_error
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+print("RMSE : ", RMSE(y_test, y_predict))
+
+from sklearn.metrics import r2_score
+r2 = r2_score(y_test, y_predict)
+print("R2 :", r2)
 
 
-#RMSE(ROOT MEAN SQUARED ERROR)
-# MSE에 루트를 씌운 것
-#입력변수가 하나일 땐 최소제곱법의 공식을 통해 기울기(a)와 회귀상수(b)를 구할 수 있지만, 입력변수가 여러개
-#일 때는 최소제곱법으로는 무리가 있다 그리고 대부분의 데이터셋은 절대적으로 입력변수가 여러 개이다
-#이런 경우 오차를 가장 최소화하는 최적선을 그리기 위해 평균 제곱근 오차를 사용한다
-#선형회귀에서의 가장 중요한 이슈는 오차가 가장 최소화되는 가장 적합한 '예측선'을 찾는 것이다
-#여기서의 오차는 '실제 값'과 '예측 값'의 차이를 말한다
-#실제 값과 예측 값의 오차의 합을 구하고 합의 평균을 값을 낸 것이 평균제곱오차(MEAN SQUARED ERROR)이다
-#그런데 간혹 오차합의 값이 굉장이 크게 나오는 경우에는 평균제곱오차의 값이 너무 커지는 경우가 있다
-#평균제곱의 오차가 커지면 딥러닝에서 다루는 데이터셋은 보통 아주 방대하고 큰 경우가 많은데 이런 경우에는
-#연산 속도가 느려질 수 있다는 단점이 있다
-#그래서 우리는 평균제곱오차 값에 루트를 씌운다
-#선형회귀에선 이 평균제곱근 오차가 가장 작은 선을 찾는 것이다 이 값을 가장 최소화 하는 기울기a와 회귀상수
-#b를 찾는 것이다
 
-
-#R제곱
-#R제곱은 바로 다른 말로는 설명력 혹은 결정계수라고 하는데 논문을 기재할 때 이수치는 필수적이다
-#독립변수가 종속변수에 대해 얼마만큼의 설명력을 가지게 되는지를 나타내는 수치인 것이다
-#만약 R제곱의 수치가 아주 낮게 나오게 된다면 가설이 채택된다고 하더라도
-#설명력이 낮기 때문에 가설의 채택은 무의미하게 되어질 가능성이 높아진다
-#예를 들어 R제곱의 수치가 .571로 나온경우 57.1%의 설명력을 가진다고 해석 할 수 있다
-#R제곱(결정계수 R2)는 -에서 1까지의 값으로 표현된다
-#R제곱을 산출하는 공식은 R제곱은 Q분에 Q-Qe 이다
-#Q = 전체 데이터의 편차들을 제곱하여 합한 값
-#Qe= 전체 데이터의 잔차들을 제곱하여 합한 값
-#R제곱 값이 1에 가까운 경우가 설명력이 큰 경우를 의미한다(ACCURACY와 유사하다)
