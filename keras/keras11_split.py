@@ -1,10 +1,26 @@
 #1.데이터
 import numpy as np 
-x_train = np.array([1,2,3,4,5,6,7,8,9,10])
-y_train = np.array([1,2,3,4,5,6,7,8,9,10])
-x_test = np.array([11,12,13,14,15])
-y_test = np.array([11,12,13,14,15])
-x_pred = np.array([16,17,18])
+x = np.array(range(1,101))
+y = np.array(range(101,201))
+#웨이트값은 1 바이어스는 100
+
+x_train = x[:60]
+x_val = x[60:80]
+x_test = x[80:]
+
+y_train = y[:60]
+y_val = y[60:80]
+y_test = y[80:]
+
+print(x_train)
+print(x_val)
+print(x_test)
+
+print(y_train)
+print(y_val)
+print(y_test)
+
+
 
 
 #2.모델구성
@@ -12,8 +28,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
-
-model.add(Dense(110, input_dim= 1, activation='sigmoid'))
+#input_dim=1은 x값 1부터 100까지를 한덩어리로 본다
+model.add(Dense(110, input_dim= 1 ))
 model.add(Dense(80))
 model.add(Dense(8))
 model.add(Dense(8))
@@ -30,7 +46,8 @@ model.add(Dense(1))
 
 #3.훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
-model.fit(x_train, y_train, epochs=100, batch_size=1)
+model.fit(x_train, y_train, epochs=100, batch_size=1,
+          validation_data=(x_val, y_val))
 
 #4.평가, 예측
 
@@ -55,7 +72,3 @@ from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 :", r2)
 
-#과제 : R2를 음수가 아닌 0.5이하로 줄이기
-#레이어는 인풋과 아웃풋을 포함 5개 이상, 노드는 레이어당 각각 5개 이상
-#batch_size =1
-#epochs = 100 이상
