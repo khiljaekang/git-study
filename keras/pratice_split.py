@@ -5,8 +5,8 @@ y = np.array(range(101, 201))
 
 from sklearn.model_selection import train_test_split 
 x_train, x_test, y_train, y_test = train_test_split( 
-    x, y, shuffle = True,
-    train_size =0.8 
+    x, y, shuffle = False,
+    train_size =0.7
     )
 
 
@@ -17,25 +17,29 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(110, input_dim= 1))
+model.add(Dense(100, input_dim= 1 ))
+model.add(Dense(60))
 model.add(Dense(80))
-model.add(Dense(8))
-model.add(Dense(8))
+model.add(Dense(80))
+model.add(Dense(110))
 model.add(Dense(10))
+model.add(Dense(110))
 model.add(Dense(10))
+model.add(Dense(105))
 model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(4))
-model.add(Dense(4))
-model.add(Dense(4))
+model.add(Dense(140))
+model.add(Dense(40))
+model.add(Dense(40))
+model.add(Dense(40))
+model.add(Dense(40))
+model.add(Dense(40))
+model.add(Dense(40))
+model.add(Dense(40))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x_train, y_train, epochs=100, batch_size=1,
-          validation_split=0.25)
+          validation_split=4/7)
  
 
 

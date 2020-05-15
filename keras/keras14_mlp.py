@@ -1,13 +1,23 @@
-#1. 데이터
 import numpy as np
-x = np.array(range(1, 101))
-y = np.array(range(101, 201))
+x = np.transpose([range(1, 101), range(311,411), range(100)])
+y = np.transpose([range(101, 201), range(711,811), range(100)])
+
+print(x.shape)
+
+# a = np.transpose(x)
+# b = np.transpose(y)
+# print(a)
+# print(a.shape)
+# print(b)
+# print(b.shape)
+
 
 from sklearn.model_selection import train_test_split 
 x_train, x_test, y_train, y_test = train_test_split( 
-    x, y, shuffle = True,
+    x, y, shuffle = False,
     train_size =0.8 
-    )
+)
+
 
 
 print(x_train)
@@ -17,7 +27,11 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(110, input_dim= 1))
+model.add(Dense(110, input_dim= 3))
+model.add(Dense(80))
+model.add(Dense(80))
+model.add(Dense(80))
+model.add(Dense(80))
 model.add(Dense(80))
 model.add(Dense(8))
 model.add(Dense(8))
@@ -31,7 +45,7 @@ model.add(Dense(10))
 model.add(Dense(4))
 model.add(Dense(4))
 model.add(Dense(4))
-model.add(Dense(1))
+model.add(Dense(3))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x_train, y_train, epochs=100, batch_size=1,
@@ -59,4 +73,3 @@ print("RMSE : ", RMSE(y_test, y_predict))
 from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 :", r2)
-

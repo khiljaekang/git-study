@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split # sklearn안에 model안에
 x_train, x_test, y_train, y_test = train_test_split( 
     # x, y, random_state=66, shuffle = True, # shuffle의 defalut = True
     #random_state(섞는 방식,순서)가 없으면 섞을 때마다 매번 나온는 값이 다름 -> 미세하게 결과가 달라짐
-    x, y, shuffle = True,
+    x, y, shuffle = False,
     train_size =0.6
     )
     # x, y의 전체 데이터 받기, train_size를 전체 데이터의 60%를 받겠다.
