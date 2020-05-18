@@ -1,3 +1,4 @@
+#1. 데이터
 import numpy as np
 x = np.transpose([range(1, 101), range(311,411), range(100)])
 y = np.transpose(range(711,811))
@@ -16,6 +17,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 print(x_train)
 print(x_test)
 
+#2.모델구성
 from keras.models import Sequential, Model
 from keras.layers import Dense, Input
 
@@ -42,13 +44,13 @@ model = Model(inputs = input1, outputs = output1)
 model.summary()
 
 
-
+#3. 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x_train, y_train, epochs=100, batch_size=1, 
           validation_split=0.25, verbose=1)
  
 
-
+#4. 평가, 예측
 loss, mse = model.evaluate(x_test ,y_test, batch_size=1)
 print("loss :", loss)
 print("mse :", mse)
@@ -69,3 +71,4 @@ print("RMSE : ", RMSE(y_test, y_predict))
 from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 :", r2)
+
