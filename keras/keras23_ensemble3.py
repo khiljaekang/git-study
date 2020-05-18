@@ -29,7 +29,7 @@ x2_train, x2_test,  = train_test_split(
 #2. 모델구성
 from keras.models import Sequential, Model 
 from keras.layers import Dense, Input 
-
+from keras.callbacks import EarlyStopping
 ######### 모델 1 #########
 input1 = Input(shape =(3, ))           
 dense1_1 = Dense(7, activation = 'relu')(input1)
@@ -73,12 +73,14 @@ model.summary()
 
 
 #3. 훈련
+es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])  
 model.fit([x1_train, x2_train], 
           [y1_train ], epochs =500, batch_size =1,
         # validation_data = (x_val, y_val)
-        validation_split= 0.25, verbose=1
-)
+        validation_split= 0.25, verbose=1,
+        callbacks = [es])
+
 
 #4. 평가,예측
 loss = model.evaluate([x1_test, x2_test],
@@ -114,5 +116,4 @@ r2_1 = r2_score(y1_test, y1_predict)
 
 
 print("R2_1 : ", r2_1)
-
 
