@@ -73,11 +73,13 @@ model.summary()
 
 
 #3. 훈련
+#es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])  
 model.fit([x1_train, x2_train], 
           [y1_train ], epochs =500, batch_size =1,
         # validation_data = (x_val, y_val)
         validation_split= 0.25, verbose=1
+        #callbacks = [es])
 )
 
 #4. 평가,예측
