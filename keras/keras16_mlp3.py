@@ -1,5 +1,5 @@
 import numpy as np
-x = np.transpose([range(1, 101), range(311,411), range(100)])
+x = np.transpose(range(1, 101))
 y = np.transpose([range(101, 201), range(711,811), range(100)])
 
 print(x.shape)
@@ -27,7 +27,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(110, input_dim= 3))
+model.add(Dense(110, input_dim= 1))
 model.add(Dense(80))
 model.add(Dense(80))
 model.add(Dense(80))
@@ -40,7 +40,7 @@ model.add(Dense(10))
 model.add(Dense(10))
 model.add(Dense(10))
 model.add(Dense(10))
-model.add(Dense(10))
+model.add(Dense(10)) 
 model.add(Dense(10))
 model.add(Dense(4))
 model.add(Dense(4))

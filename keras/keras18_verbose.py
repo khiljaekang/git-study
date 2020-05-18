@@ -1,15 +1,8 @@
 import numpy as np
 x = np.transpose([range(1, 101), range(311,411), range(100)])
-y = np.transpose([range(101, 201), range(711,811), range(100)])
+y = np.transpose(range(711,811))
 
 print(x.shape)
-
-# a = np.transpose(x)
-# b = np.transpose(y)
-# print(a)
-# print(a.shape)
-# print(b)
-# print(b.shape)
 
 
 from sklearn.model_selection import train_test_split 
@@ -27,29 +20,29 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
-model.add(Dense(110, input_dim= 3))
-model.add(Dense(80))
-model.add(Dense(80))
-model.add(Dense(80))
-model.add(Dense(80))
-model.add(Dense(80))
-model.add(Dense(8))
-model.add(Dense(8))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(10))
-model.add(Dense(4))
-model.add(Dense(4))
-model.add(Dense(4))
-model.add(Dense(3))
+model.add(Dense(1000, input_dim= 3))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(800))
+model.add(Dense(1000))
+model.add(Dense(800))
+model.add(Dense(800))
+model.add(Dense(800))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(1000))
+model.add(Dense(100))
+model.add(Dense(100))
+model.add(Dense(100))
+model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
-model.fit(x_train, y_train, epochs=100, batch_size=1,
-          validation_split=0.25)
+model.fit(x_train, y_train, epochs=300, batch_size=1, 
+          validation_split=0.25, verbose=0)
  
 
 
