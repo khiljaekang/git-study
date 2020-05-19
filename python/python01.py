@@ -77,16 +77,16 @@ b = 'xyz'
 print(a + b)
 
 # 문자열 인덱싱 
-#띄어쓰기, 콤마, 마침표 등도 문자다.
+#띄어쓰기, 콤마, 마침표 등도 문자다.      # : , - 차이점에 주의해야 함.
 a = 'Hello, Deep learning'
-print(a[7])
-print(a[-1])
-print(a[-2])
-print(a[3:9])
-print(a[3:-5])
-print(a[:-1])
-print(a[1:])
-print(a[5:-4])
+print(a[7])                     # D
+print(a[-1])                    # g
+print(a[-2])                    # n
+print(a[3:9])                   # lo, De
+print(a[3:-5])                  # lo, Deep lea
+print(a[:-1])                   # Hello, Deep learnin
+print(a[1:])                    # ello, Deep learning
+print(a[5:-4])                  # , Deep lear
 
 
 
