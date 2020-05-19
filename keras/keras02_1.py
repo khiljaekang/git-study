@@ -28,7 +28,9 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 model.fit(x, y, epochs=200, batch_size=100)
 
-loss, acc = model.evaluate(x, y, )
+loss, acc = model.evaluate(x, y )
 
 print("acc :", acc)
 print("loss : ", loss)
+
+

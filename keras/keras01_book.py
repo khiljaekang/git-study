@@ -11,7 +11,7 @@ model.add(Dense(1, input_dim=1, activation='relu'))
 
 model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
 
-model.fit(x, y, epochs= 500, batch_size=1)
+model.fit(x, y, epochs= 50, batch_size=1)
 
 loss, acc = model.evaluate(x, y, batch_size=1)
 

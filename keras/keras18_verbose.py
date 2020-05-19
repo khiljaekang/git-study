@@ -43,6 +43,11 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x_train, y_train, epochs=300, batch_size=1, 
           validation_split=0.25, verbose=0)
+        
+#verbose:
+# 0 = silent, 
+# 1 = progress bar, 
+# 2 = one line per epoch.
  
 
 
