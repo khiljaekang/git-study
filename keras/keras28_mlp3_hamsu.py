@@ -14,7 +14,7 @@ print(x.shape)
 
 from sklearn.model_selection import train_test_split 
 x_train, x_test, y_train, y_test = train_test_split( 
-    x, y, shuffle = True, random_state=66,
+    x, y, shuffle = True, random_state=1,
     train_size =0.8 
 )
 
