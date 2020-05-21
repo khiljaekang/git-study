@@ -56,7 +56,7 @@ num_params = 4 * ( num_units   +   input_dim   +   1 )  *  num_units
                     역전파 : 나온 '출력' 값이 다시 '입력'으로 들어감(자귀회귀)
 '''
 
-'''
+
 # EarlyStopping
 # from keras.callbacks import EarlyStopping
 # es = EarlyStopping(monitor = 'loss', patience=100, mode = 'min')
@@ -75,4 +75,4 @@ print(x_predict)
 
 y_predict = model.predict(x_predict)
 print(y_predict)
-'''
+
