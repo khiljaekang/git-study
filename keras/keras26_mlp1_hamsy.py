@@ -30,7 +30,7 @@ from keras.callbacks import EarlyStopping
 
 input1 = Input(shape =(3, ))           
 dense1_1 = Dense(7, activation = 'relu')(input1)
-dense1_2 = Dense(10, activation = 'relu' )(dense1_1)
+dense1_2 = Dense(1, activation = 'sigmoid' )(dense1_1)
 dense1_2 = Dense(5, activation = 'relu')(dense1_2)
 output1 = Dense(3)(dense1_2)
 
