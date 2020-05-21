@@ -1,6 +1,7 @@
 from numpy import array
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
+from keras.layers import Dense, SimpleRNN
 
 # 1. 데이터
 x = array([[1,2,3],[2,3,4],[3,4,5],[4,5,6]])
@@ -32,12 +33,12 @@ batch_size   1   2   3  | 4     : x의 한 행에 들어간 값을 몇개씩 자
 #2. 모델구성
 model = Sequential()
 # model.add(LSTM(10, activation='relu', input_shape = (3, 1)))
-model.add(LSTM(5, input_length =3, input_dim= 1))                # input_length : time_step (열)
+model.add(SimpleRNN (5, input_length =3, input_dim= 1))                # input_length : time_step (열)
 model.add(Dense(3))   
 model.add(Dense(1))
 
-
 model.summary()
+
 '''
 LSTM_parameter 계산
 num_params = 4 * ( num_units   +   input_dim   +   1 )  *  num_units
