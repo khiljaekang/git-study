@@ -70,7 +70,7 @@ merge1 = concatenate([dense1_2, dense2_2])
 middle1 = Dense(120)(merge1) 
 middle1 = Dense(100)(middle1) 
 middle1 = Dense(80)(middle1) 
-
+ 
 
 ######### output 모델 구성 ###########
 output1 = Dense(60)(middle1)   
