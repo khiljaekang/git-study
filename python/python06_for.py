@@ -18,7 +18,7 @@ for i in a:
 
 ##while문
 '''
-while 조건문 :     #참일 동안 계속 돈다.
+#while 조건문 :     #참일 동안 계속 돈다.
     수행할 문장
 '''
 
@@ -106,6 +106,8 @@ for i in jumsu:
         print("경]합격[축")
         number = number + 1
 print("합격인원 : ", number, "명")
+
+
 
 
 

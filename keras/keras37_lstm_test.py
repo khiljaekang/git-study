@@ -57,6 +57,8 @@ model.add(LSTM(10, activation = 'relu', input_length = 3, input_dim = 1,
                return_sequences = True)) 
 # 10은 아웃풋 10 ,output shape에서(none, 3, 10 ) 가 나왔음으로 그 다음에서는 10이 feature의 개수가 된다
 #input1 = Input(shape=(3,))는  lstm에서 input_length = 3, input_dim = 1, 이렇게 바꿀 수 있다.
+#각 노드의 가중치값이 너무 많이 얽혀있어서 Dense보다 결과 값이 나오기힘들다 LSTM이 이 많아도 
+#완벽한 순차적 데이터가 아니다. 
 model.add(LSTM(20, return_sequences = True))
 model.add(LSTM(40, return_sequences = True))
 model.add(LSTM(30, return_sequences = False)) 
