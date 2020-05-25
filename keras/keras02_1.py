@@ -1,7 +1,9 @@
+#1. 데이터 생성
 import numpy as np
 x = np.array([1,2,3,4,5,6,7,8,9,10])
 y = np.array([2,4,6,8,10,12,14,16,18,20])
 
+#2. 모델 구성
 from keras.models import Sequential
 from keras.layers import Dense 
 
@@ -24,10 +26,11 @@ model.add(Dense(3))
 model.add(Dense(2))
 model.add(Dense(1))
 
-
+#3. 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 model.fit(x, y, epochs=200, batch_size=100)
 
+#4. 평가,예측
 loss, acc = model.evaluate(x, y )
 
 print("acc :", acc)
