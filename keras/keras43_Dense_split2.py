@@ -47,6 +47,9 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size = 0.8)
 x = dataset[:, 0:4]
 y = dataset[:, 4]
 
+
+
+
 # x_predict 값
 from sklearn.model_selection import train_test_split
 x1, x_predict, y1, y_predict = train_test_split(x, y, train_size = 90/96)
