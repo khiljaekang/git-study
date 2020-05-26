@@ -56,6 +56,8 @@ model.add(Dense(1, name ='new'))                    # 가져온 모델의 layer�
 
 model.summary()
 
+#전위학습을 했는데도 튜딩을 해야하는이유? 데이터가 다르니까
+
 '''
 # EarlyStopping
 from keras.callbacks import EarlyStopping

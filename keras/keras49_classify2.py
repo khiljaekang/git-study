@@ -55,10 +55,14 @@ print('loss :', loss)
 print('acc :', acc)
 
 
-x_pred = np.array([1, 2, 3])
-y_pred = model.predict(x_pred)
-print('y_pred :', y_pred)
-print(y_pred.shape)                               # (3, 6)
+x_pred = np.array([1, 2, 3, 4, 5])
+y_predict = model.predict(x_pred, batch_size=1)
+print(y_predict)
+
+y_predict = np.argmax(y_predict,axis=1) + 1
+
+print(y_predict)
+print(y_predict.shape)                               # (3, 6)
 """x하나 집어 넣으면 6개가 나옴 (one_hot_encoding때문)
    0  1  2   3   4   5
 """
