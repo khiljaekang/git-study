@@ -1,7 +1,6 @@
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
-
 from keras.utils import np_utils
 # from keras.utils import to_categorical
 
@@ -22,7 +21,7 @@ y = y[:, 1:]
 """
 
 print(y)                    
-print(y.shape)                     # (10, 6)
+print(y.shape)                     # (10, 6)을 y = y[:, 1:] 써서 (10,5)
 
 
 #2. 모델 구성
