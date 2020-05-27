@@ -18,7 +18,7 @@ model.add(Conv2D(10,(2,2),  input_shape=(10,10,1)))  #(9, 9, 10)
            #stride가 default 값으로 숨어 있고 default값은 1이다.
            #stride는 몇칸씩 묶을 것인가를 결정한다. 
            #maxpooling = 필요한 데이터를 날리고 중요한 부분만 추출하겠다.ex) (4,4)→(2,2)
-model.add(Conv2D(7, (3,3), ))               #(7, 7, 7)
+model.add(Conv2D(7, (3,3), ))               #(7, 7, `7)
 model.add(Conv2D(5, (2,2), padding='same')) #(7, 7, 7)
 model.add(Conv2D(5, (2,2)))                #(6, 6, 5)
 model.add(Conv2D(5, (2,2), strides=2 ))                #(3, 3, 5)
