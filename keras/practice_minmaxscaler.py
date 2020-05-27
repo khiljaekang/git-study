@@ -1,3 +1,4 @@
+'''
 # 1	StandardScaler	기본 스케일. 평균과 표준편차 사용
 # 2	MinMaxScaler	최대/최소값이 각각 1, 0이 되도록 스케일링
 # 3	MaxAbsScaler	최대절대값과 0이 각각 1, 0이 되도록 스케일링
@@ -13,6 +14,7 @@
 
 
 '''
+'''
 ####      minmaxscaler (nomalization)
  Data pre processing(데이터 전처리 과정) 중 결측값, 이상치 처리를 비롯하여 실행하는 과정이다.
 #Normalization(졍규화) 또는 Standardization(표준화) 라고 한다. 이는, 0-1 사이로 전체적인 scale을 맞춰준다.
@@ -22,19 +24,10 @@
 (범위가 더 큰 변수의 영향을 더 받게 된다.) 이에 데이터를 표준화 또는 정규화를 이용해서 값의 범위를 조절하여 사용한다.
 
 즉, 데이터의 값이 0-1 범위내에 존재하도록 비율적으로 축소시키는 작업을 의미한다
-
-
-
-
-
-
-
-
 '''
 
 
-# ##### normalization
-# from sklearn 
 
 
- 
+
+

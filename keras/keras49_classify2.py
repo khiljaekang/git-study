@@ -34,7 +34,7 @@ model.add(Dense(30,activation = 'relu'))
 model.add(Dense(20,activation = 'relu'))
 model.add(Dense(5,activation = 'relu'))        
 model.add(Dense(5,activation = 'softmax'))
-""" 다중 분류는 'softmax' 사용
+"""""""""""""""" 다중 분류는 'softmax' 사용 """"""""""""""""""""
    : 가장 큰 수 빼고는 전부 0으로 나옴
 """
 
@@ -59,6 +59,7 @@ y_predict = model.predict(x_pred, batch_size=1)
 print(y_predict)
 
 y_predict = np.argmax(y_predict,axis=1) + 1
+#argmax는 최대값을 뽑아 낸다. axis 는 축. 
 
 print(y_predict)
 print(y_predict.shape)                               # (3, 6)

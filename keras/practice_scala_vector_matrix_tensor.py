@@ -16,9 +16,7 @@
 2차원 행렬을 일반화하여, 배열을 임의의 차원을 가지는 정규 격자 형태로 배치한 것을 텐서라고 한다. 즉 3차원 이상의
 수의 집합을 표현할때에는, 모두 텐서로 표현한다.
 
-!!행렬 계산은 가장 작은 단위부터 시작하면 된다.
 
-https://machinelearningmastery.com/reshape-input-data-long-short-term-memory-networks-keras/
 
 
 
