@@ -1,86 +1,76 @@
-from sklearn.datasets import load_breast_cancer
-from keras.models import Sequential, Model
-from keras.utils import np_utils
-from keras.layers import Conv2D, Dense, MaxPooling2D, Dropout, Flatten, Input, LSTM
-from keras.callbacks import EarlyStopping, TensorBoard, ModelCheckpoint
-import matplotlib.pyplot as plt
 import numpy as np
-import shutil
-import os
-tmp = os.getcwd() + '\\keras'
-if os.path.isdir(tmp +'\\graph') :
-    shutil.rmtree(tmp +'\\graph')
-if os.path.isdir(tmp +'\\model') :
-    shutil.rmtree(tmp +'\\model')
-os.mkdir(tmp +'\\graph')
-os.mkdir(tmp +'\\model')
-
-## 데이터
-breast_cancer = load_breast_cancer()
-
-x = breast_cancer.data
-y = breast_cancer.target
-
-from sklearn.preprocessing import MinMaxScaler
-scale = MinMaxScaler()
-x = scale.fit_transform(x)
-
-x = x.reshape(x.shape[0], 1 , x.shape[1])
-
+from keras.models import Sequential
+from keras.layers import Dense, LSTM, Dropout
+from keras.callbacks import EarlyStopping
+from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train,y_test = train_test_split(
-    x,y, random_state=66, train_size = 0.8
-)
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.datasets import load_breast_cancer
+es = EarlyStopping(monitor = 'loss',
+                   mode = 'min',
+                   patience = 10)
+pca = PCA(n_components = 20)
+mms = MinMaxScaler()
 
-input1 = Input(shape=(1, 30))
+# 1. data
+x, y = load_breast_cancer(return_X_y = True)
+print(x.shape)              # (569, 30)
+print(y.shape)              # (569,)
 
-lstm1 = LSTM(800, activation='elu')(input1)
-lstm1 = Dropout(0.2)(lstm1)
+# 1-1. pca
+x = pca.fit_transform(x)
 
-dense1 = Dense(200, activation='elu')(lstm1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(1, activation='sigmoid')(dense1)
+# 1-2. split
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size = 0.2,
+    shuffle = True, random_state = 77)
 
-model = Model(inputs=input1, output=dense1)
+# 1-3. scaling & reshape
+x_train = mms.fit_transform(x_train)
+x_train = x_train.reshape(-1, 20, 1)
+x_test = x_test.reshape(-1, 20, 1)
 
-model.compile(optimizer='adam', loss = 'binary_crossentropy', metrics=['acc'])
 
-early = EarlyStopping(monitor='val_loss', patience =20)
-tensor = TensorBoard(log_dir = '.\keras\graph', histogram_freq = 0, 
-                      write_graph = True, write_images = True)
-check = ModelCheckpoint(filepath='.\keras\model\{epoch:02d}-{val_loss:.5f}.hdf5',
-                        monitor='val_loss',save_best_only=True)
+# 2. Modeling _ LSTM
+model = Sequential()
+model.add(LSTM(16, input_shape = (20, 1),
+               activation = 'relu',
+               return_sequences = True))
+model.add(LSTM(16, activation = 'relu'))
+model.add(Dropout(rate = 0.2))
+model.add(Dense(32, activation = 'relu'))
+model.add(Dense(32, activation = 'relu'))
+model.add(Dropout(rate = 0.2))
+model.add(Dense(64, activation = 'relu'))
+model.add(Dense(64, activation = 'relu'))
+model.add(Dense(1, activation = 'softmax'))
 
-hist = model.fit(x_train, y_train, batch_size=500, epochs=1000,
-                validation_split = 0.3, callbacks = [early, tensor, check])
+model.summary()
 
-loss, acc = model.evaluate(x_test, y_test)
-print('loss :',loss)
-print('acc :',acc)
 
-plt.subplot(2,1,1)
-plt.plot(hist.history['loss'], c = 'black',label = 'loss')
-plt.plot(hist.history['val_loss'], c = 'blue', label = 'val_loss')
-plt.ylabel('loss')
-plt.legend()
-plt.subplot(2,1,2)
-plt.plot(hist.history['acc'], c = 'black',label = 'acc')
-plt.plot(hist.history['val_acc'], c = 'blue', label = 'val_acc')
-plt.ylabel('acc')
-plt.legend()
+# 3. compile & fit
+model.compile(loss = 'binary_crossentropy',
+              metrics = ['accuracy'],
+              optimizer = 'adam')
+model.fit(x_train, y_train, callbacks = [es],
+          epochs = 20, batch_size = 1,
+          validation_split = 0.05, verbose = 1)
 
-plt.show()
-""" 
-loss : 0.06878356720533288
-acc : 0.9824561476707458
- """
+
+# 4. evaluate
+res = model.evaluate(x_test, y_test)
+print("Result : ", res)
+print("loss : ", res[0])
+print("ACc : ", res[1])
+
+pred = model.predict(x_test)
+pred = pred.reshape(-1, ).astype('int64')
+print("Predict : ", pred[:5])
+print("Test data : ", y_test[:5])
+
+
+'''
+loss :  5.245581672902693
+ACc :  0.6578947305679321
+Predict :  [1 1 1 1 1]
+'''

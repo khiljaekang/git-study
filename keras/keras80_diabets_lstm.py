@@ -1,93 +1,121 @@
-from sklearn.datasets import load_diabetes
-from keras.models import Sequential, Model
-from keras.utils import np_utils
-from keras.layers import Conv2D, Dense, MaxPooling2D, Dropout, Flatten, Input, LSTM
-from keras.callbacks import EarlyStopping, TensorBoard, ModelCheckpoint
-import matplotlib.pyplot as plt
 import numpy as np
-import shutil
-import os
-tmp = os.getcwd() + '\\keras'
-if os.path.isdir(tmp +'\\graph') :
-    shutil.rmtree(tmp +'\\graph')
-if os.path.isdir(tmp +'\\model') :
-    shutil.rmtree(tmp +'\\model')
-os.mkdir(tmp +'\\graph')
-os.mkdir(tmp +'\\model')
-
-## 데이터
-diabetes = load_diabetes()
-
-x = diabetes.data
-y = diabetes.target
-
+import matplotlib.pyplot as plt
+from keras.models import Sequential, Model
+from keras.layers import Dense, LSTM, Dropout
+from keras.layers import Flatten
+from keras.utils import np_utils
+from keras.callbacks import EarlyStopping
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
-scale = MinMaxScaler()
-x = scale.fit_transform(x)
-
-x = x.reshape(x.shape[0], 2,5)
-
+from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import RobustScaler
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train,y_test = train_test_split(
-    x,y, random_state=66, train_size = 0.8
-)
-
-input1 = Input(shape=(2, 5))
-
-lstm1 = LSTM(800, activation='elu')(input1)
-lstm1 = Dropout(0.2)(lstm1)
-
-dense1 = Dense(200, activation='elu')(lstm1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(200, activation='elu')(dense1)
-dense1 = Dropout(0.2)(dense1)
-dense1 = Dense(1, activation='elu')(dense1)
-
-model = Model(inputs=input1, output=dense1)
-
-model.compile(optimizer='adam', loss = 'mse', metrics=['mse'])
-
-early = EarlyStopping(monitor='val_loss', patience = 10)
-tensor = TensorBoard(log_dir = '.\keras\graph', histogram_freq = 0, 
-                      write_graph = True, write_images = True)
-check = ModelCheckpoint(filepath='.\keras\model\{epoch:02d}-{val_loss:.5f}.hdf5',
-                        monitor='val_loss',save_best_only=True)
-
-hist = model.fit(x_train, y_train, batch_size=100, epochs=1000,
-                validation_split = 0.3, callbacks = [early, tensor, check])
-
-loss, mse = model.evaluate(x_test, y_test)
-print('loss :',loss)
-print('mse :',mse)
-
+from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
-y_pred = model.predict(x_test)
-r2_y = r2_score(y_test,y_pred)
-print("결정계수 : ", r2_y)
+from sklearn.datasets import load_diabetes
 
-plt.subplot(2,1,1)
-plt.plot(hist.history['loss'], c = 'black',label = 'loss')
-plt.plot(hist.history['val_loss'], c = 'blue', label = 'val_loss')
-plt.ylabel('loss')
-plt.legend()
-plt.subplot(2,1,2)
-plt.plot(hist.history['mse'], c = 'black',label = 'mse')
-plt.plot(hist.history['val_mse'], c = 'blue', label = 'val_mse')
-plt.ylabel('mse')
-plt.legend()
+es = EarlyStopping(monitor = 'val_loss',
+                   mode = 'min',
+                   patience = 10)
+ss = StandardScaler()
+mms = MinMaxScaler()
+mas = MaxAbsScaler()
+rs = RobustScaler()
+pca = PCA(n_components = 8)
 
-plt.show()
 
-""" 
-loss : 3501.277585147472
-mse : 3501.27783203125
-결정계수 :  0.4605152824199772
- """
+# 1. load data
+x, y = load_diabetes(return_X_y = True)
+print(x.shape)
+print(y.shape)
+
+# 1-1. preprocessing
+x = rs.fit_transform(x)
+print(x[:5])
+
+# 1-2 Principle Component Analysis(PCA)
+pca.fit(x)
+x = pca.transform(x)
+print(x.shape)
+
+# 1-3. data split
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size = 0.2,
+    shuffle = True, random_state = 77)
+print(x_train.shape)
+print(x_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
+# 1-4. data reshape
+x_train = x_train.reshape(x_train.shape[0], 8, 1)
+x_test = x_test.reshape(x_test.shape[0], 8, 1)
+print(x_train.shape)
+print(x_test.shape)
+
+
+# 2. Modeling
+# 2-1. Sequential Model
+model = Sequential()
+
+model.add(LSTM(128, input_shape = (8, 1),
+               activation = 'relu',
+               return_sequences = True))
+model.add(LSTM(128, activation = 'relu',
+               return_sequences = True))
+model.add(Dropout(rate = 0.1))
+model.add(LSTM(256, activation = 'relu'))
+model.add(Dense(256, activation = 'relu'))
+model.add(Dropout(rate = 0.1))
+model.add(Dense(512, activation = 'relu'))
+model.add(Dense(512, activation = 'relu'))
+model.add(Dropout(rate = 0.1))
+model.add(Dense(1, activation = 'relu'))
+
+model.summary()
+
+
+# 3. Compile & Fitting
+model.compile(loss = 'mean_squared_error',
+              metrics = ['mse'],
+              optimizer = 'adam')
+hist = model.fit(x_train, y_train, callbacks = [es],
+                 epochs = 1000, batch_size = 1,
+                 validation_split = 0.05, verbose = 1)
+print(hist.history.keys())
+
+
+# 4. Evaluate Model
+res = model.evaluate(x_test, y_test)
+print("Result : ", res)
+print("loss : ", res[0])
+print("mse : ", res[1])
+
+y_predict = model.predict(x_test)
+print("Predict of 1 ~ 5 : \n", y_predict)
+
+
+# 5. Evaluation index
+# 5-1. RMSE
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+print("RMSE : ", RMSE(y_test, y_predict))
+
+# 5-2. R2 Score
+print("R2 Score : ", r2_score(y_test, y_predict))
+
+
+'''
+Result
+loss :  3734.434754103757
+mse :  3734.4345703125
+Predict of 1 ~ 5 : 
+ [[125.05877 ]
+ [124.1166  ]
+ [137.71922 ]
+ [126.53372 ]
+ [161.64119 ]]
+RMSE :  61.11002118568688
+R2 Score :  0.4082762988101515
+'''
