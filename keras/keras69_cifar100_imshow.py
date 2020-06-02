@@ -18,6 +18,6 @@ print(y_train.shape)                # (50000, 1)
 print(y_test.shape)                 # (10000, 1)
 
 
-plt.imshow(x_train[3])
+plt.imshow(x_train[4])
 plt.show()
 

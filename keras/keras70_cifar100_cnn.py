@@ -24,7 +24,8 @@ print(y_test.shape)                 # (10000, 1)
 # y
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
-print(y_train.shape)                # (50000, 100) 
+print(y_train.shape)                # (50000, 100)       # 원핫인코딩을 통해서 다른 값들이 100개인 100개의 컬럼이 만들어짐
+
 
 #2. model
 input1 = Input(shape = (32, 32, 3))
@@ -114,3 +115,4 @@ plt.legend()
 plt.show()
 
 #loss_acc:  [3.7235297805786134, 0.09529999643564224]
+

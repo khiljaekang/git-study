@@ -14,7 +14,7 @@ from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
 scaler.fit(x)
 x = scaler.transform(x)
-print(x[0,-1])
+print(x[0,-1])      # 0행에서 마지막 열을 보겠다. 
 
 # train_test
 from sklearn.model_selection import train_test_split
@@ -104,3 +104,5 @@ plt.legend()
 plt.show()
 
 # R2:  0.8558000745611529
+
+
