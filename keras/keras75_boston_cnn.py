@@ -9,6 +9,8 @@ y = boston.target
 print(x.shape)           # (506, 13)
 print(y.shape)           # (506,)
 
+#scaler는 2차원만 받는다.
+#y는 target이기 떄문에 스케일링 할 필요가 없다.
 # standardscaler
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()

@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 
-np_samsung = np.load('./data/samsung.npy')
-np_hite = np.load('./data/hite.npy')
+np_samsung = np.load('./data/exam/samsung.npy')
+np_hite = np.load('./data/exam/hite.npy')
 # print(np_samsung)
 # print(np_hite)
 # print(np_samsung.shape)              # (509, 1)

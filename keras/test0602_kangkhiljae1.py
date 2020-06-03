@@ -83,12 +83,12 @@ hite = hite.values
 # print(samsung.shape)                 # (509, 1)
 # print(hite.shape)                    # (508, 5)
 
-np.save('./data/samsung.npy', arr = samsung)
-np.save('./data/hite.npy', arr = hite)
+np.save('./data/exam/samsung.npy', arr = samsung)
+np.save('./data/exam/hite.npy', arr = hite)
 
 
-np_samsung = np.load('./data/samsung.npy')
-np_hite = np.load('./data/hite.npy')
+# np_samsung = np.load('./data//samsung.npy')
+# np_hite = np.load('./data//hite.npy')
 # print(np_samsung)
 # print(np_hite)
 # print(np_samsung.shape)              # (509, 1)
