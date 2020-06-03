@@ -22,8 +22,10 @@ print(x1_train)
 print(x2_train)
 print(y1_train)
 
+print(x1.shape)
 
 
+'''
 
 #2. 모델구성
 from keras.models import Sequential, Model 
@@ -80,7 +82,7 @@ model.fit([x1_train, x2_train],
 )
 
 #4. 평가,예측
-loss = model.evaluate([x1_test, x2_test],
+loss = model.evaluate([x1_test, x2_test], 
                       [y1_test,  ], batch_size =1)
 
 # print("model.metrics_names : ", model.metrics_names) 
@@ -113,3 +115,7 @@ r2_1 = r2_score(y1_test, y1_predict)
 
 
 print("R2_1 : ", r2_1)
+
+'''
+
+

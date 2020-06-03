@@ -189,6 +189,129 @@ print("연 : " + jumin[0:2])  # 0 부터 2 직전까지
 print("월 : " + jumin[2:4])  # 2 부터 4 직전까지
 print("일 : " + jumin[4:6])  # 4 부터 6 직전까지
 print("생년월일 : " +jumin[:6])  #  :6 = 처음부터 6직전까지
+print("뒤 7자리 : " +jumin[7:14]) # 7 부터 14직전까지 또는 7:  7부터 끝까지
+print("뒤 7자리 (뒤에서 부터) : " + jumin[-7:]) #뒤에서 7번째부터 끝까지 
+
+
+
+#''''''''''''''''''''''7.문자열 처리 함수'''''''''''''''''''''
+
+python = "python is Amazing"
+print(python.lower())
+print(python.upper())
+print(python[0].islower())
+print(python[0].isupper())
+print(len(python))
+print(python.replace("python","Java"))
+
+index = python.index("n")
+print(index)
+index = python.index("n", index + 1)
+print(index)
+
+print(python.find("java"))  # 값이 포함되어 있지 않을 때는 -1을 반환해준다.
+# print(python.index("java"))  #index에서는 원하는 값이 없을 때는 오류가 난다.
+
+print(python.count("n"))
+
+
+#''''''''''''''''''''''8.문자열 포맷'''''''''''''''''''''
+
+# print("a"+"b")
+# print("a","b")
+
+##################문자열 포맷 방법1####################
+
+print("나는 %d살입니다." %20)  #d는 정수값만 집어넣을 수 있다.
+print("나는 %s을 좋아해요"%"파이썬") #%s 는 string(문자형)을 의미한다 
+print("apple은 %c로 시작해요" %"A")  #%c 는 한글자만 받겠다.
+
+############ %s 는 만능이다. 숫자나 문자나 둘다 불러올 수 있음
+print("나는 %s살입니다." %"20")
+print("나는 %s색과 %s색을 좋아해요." % ("파란", "빨간"))
+
+
+
+##################문자열 포맷 방법2####################
+
+print("나는 {}살입니다.".format(20))
+print("나는 {}색과 {}을 좋아해요.".format("파란","빨간"))
+print("나는 {0}색과 {1}을 좋아해요.".format("파란","빨간"))
+
+
+
+##################문자열 포맷 방법3####################
+
+print("나는 {age}살이며, {color}색을 좋아해요".format(age =20, color="빨간"))
+print("나는 {color}살이며, {age}색을 좋아해요".format(age =20, color="빨간"))
+
+
+##################문자열 포맷 방법4####################
+
+age = 20
+color = "빨간"
+print(f"나는 {age}살이며, {color}색을 좋아해요")
+
+
+
+#''''''''''''''''''''''9.탈출 문자'''''''''''''''''''''
+
+#\n : 줄바꿈
+print("백문이 불여일견\n백견이 불여일타")
+
+#저는 "나도코딩"입니다.
+print("저는 '나도코딩'입니다")
+print('저는 "나도코딩"입니다')
+print("저는 \"나도코딩\"입니다")
+print('저는 \'나도코딩\'입니다')
+
+# \\ : 문장 내에서 \
+
+# \r : 커서를 맨 앞으로 이동
+print("Red Apple\rPine")
+
+# \b : 한글자 삭제 
+
+print("Redd\bApple")
+
+# \t : tab 역할 
+
+print("Red\tApple")
+
+
+''' Quiz) 사이트별로 비밀번호를 만들어 주는 프로그램을 작성하시오
+    예) http://naver.com
+    규칙1 : http:// 부분은 제외 => naver.com
+    규칙2 : 처음 만나는 점(.) 이후 부분은 제외 => naver
+    규칙3 : 남은 글자 중 처음 세자리 + 글자 갯수(5) + 글자 내 'e'갯수(1) + "!"로 구성
+    
+    예)생성된 비밀번호 : nav51!
+'''
+
+url = "http://naver.com"
+
+password = url
+url = url[6: 12]
+
+url = url[:, 3:] + ("5") + ("1") + ("!")
+
+print(int(url)
+
+#### 1:17:23 부터 ###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

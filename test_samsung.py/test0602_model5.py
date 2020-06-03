@@ -52,18 +52,18 @@ x_hit = scaler.transform(hite)
 
 
 # PCA
-pca =PCA(n_components = 1)                      
+pca =PCA(n_components = 3)                      
 pca.fit(x_hit)
-x_hit = pca.transform(x_hit).reshape(x_hit.shape[0], )
-print(x_hit.shape)                # (509, )
+x_hit = pca.transform(x_hit)
+print(x_hit.shape)                # (509, 3)
 
 # split
 x_hit = split_x(x_hit, size)
-print(x_hit.shape)                # (504, 6)
+print(x_hit.shape)                # (504, 6, 3)
 
 
 x_sam = x_sam.reshape(x_sam.shape[0], x_sam.shape[1], 1)
-x_hit = x_hit.reshape(x_hit.shape[0], x_hit.shape[1], 1)
+
 
 
 #2. 모델구성 
@@ -78,7 +78,7 @@ x6 = Dense(60)(x5)
 x7 = Dense(40)(x6)
 x8 = Dense(10)(x7)
 
-input2 = Input(shape=(6,1))
+input2 = Input(shape=(6,3))
 y1 = LSTM(5, activation = 'relu')(input2)
 y2 = Dense(40)(y1)
 y3 = Dense(60)(y2)
