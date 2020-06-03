@@ -83,3 +83,12 @@ model.summary()
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit([x_sam, x_hit], y_sam, epochs=5)    
 
+''' 스플릿 함수 정의 '''
+
+def split_x(seq, size):
+    aaa = []
+    for i in range(len(seq) - size + 1):    # for i in range(509 - 6 + 1) = for i in range(504)
+        subset = seq[i:(i+size)]            # subset = seq[0:(0+6)] = seq[0:6] = (인덱스 개념) [0,1,2,3,4,5]
+        aaa.append([j for j in subset])     # aaa[i] = aaa[0] = [0,1,2,3,4,5], i=1 => [1,2,3,4,5,6]
+    return np.array(aaa)                    # ([0~5], [1~6], [2~7], ... , [504~509])
+size = 6            # 6일치씩 자르겠다
