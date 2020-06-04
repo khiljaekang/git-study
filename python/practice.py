@@ -288,18 +288,18 @@ print("Red\tApple")
     예)생성된 비밀번호 : nav51!
 '''
 
+
 url = "http://naver.com"
 
-password = url
-url = url[6: 12]
+my_str = url.replace("http://","")       #규칙1
 
-url = url[:, 3:] + ("5") + ("1") + ("!")
+print(my_str)
 
-print(int(url)
+my_str = my_str[:my_str.index(".")]      #규칙2  my_str[0:5] -> 0 ~ 5 직전까지. (0 ,1, 2, 3, 4,)
+print(my_str)
 
-#### 1:17:23 부터 ###
-
-
+password = my_str[:3] + str(len(my_str)) + str(my_str.count("e")) + "!"
+print*"{0}의 비밀번호는 {1} 입니다.".format(url, password)
 
 
 
