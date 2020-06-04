@@ -1,4 +1,4 @@
-from sklearn.svm import LinearSVC             
+from sklearn.svm import LinearSVC        
 from sklearn.metrics import accuracy_score
 
 #1. 데이터
@@ -7,6 +7,7 @@ y_data = [0, 1, 1, 0]
 
 #2. 모델
 model = LinearSVC()
+
 
 #3. 룬련
 model.fit(x_data, y_data)

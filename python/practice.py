@@ -364,6 +364,23 @@ print(mix_list)
 num_list.extend(mix_list)
 print(num_list)
 
+cabinet = {3:"유재석", 100:"김태호"}
+print(cabinet[3])
+print(cabinet[100])
+print(3 in cabinet)
+print(5 in cabinet)
+
+cabinet = {"A-3":"유재석", "B-100":"김태호"}
+print(cabinet["A-3"])
+print(cabinet["B-100"])
+
+#새 손님
+print(cabinet)
+cabinet["A-3"] = "김종국"
+cabinet["C-20"] = "조세호"
+print(cabinet)
+
+
 
 
 
