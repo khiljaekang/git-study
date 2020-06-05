@@ -14,8 +14,8 @@ print(y_train.shape)
 print(y_test.shape)
 
 print(x_train[0].shape)
-plt.imshow(x_train[20], 'gray')
-# plt.imshow(x_train[0])
-plt.show()
+# plt.imshow(x_train[20], 'gray')
+# # plt.imshow(x_train[0])
+# plt.show()
 
 
