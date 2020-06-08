@@ -24,14 +24,15 @@ print(y_train.shape)                                    # (60000, 10)
 
 # gridsearch에 넣기위한 모델(모델에 대한 명시 : 함수로 만듦)
 def build_model(drop=0.5, optimizer = 'adam'):
-    inputs = Input(shape= (28*28, ), name = 'input')
-    x = Dense(51, activation = 'relu', name = 'hidden1')(inputs)
+    inputs = Input(shape= (28,28,1), name = 'input')
+    x = Conv2D(51, kernel_size=(3,3), activation = 'relu', name = 'hidden1')(inputs)
     x = Dropout(drop)(x)
-    x = Dense(256, activation = 'relu', name = 'hidden2')(x)
+    x = Conv2D(256, kernel_size=(3,3),activation = 'relu', name = 'hidden2')(x)
     x = Dropout(drop)(x)
-    x = Dense(128, activation = 'relu', name = 'hidden3')(x)
+    x = Conv2D(128, kernel_size=(3,3),activation = 'relu', name = 'hidden3')(x)
     x = Dropout(drop)(x)
-    outputs = Dense(10, activation = 'softmax', name = 'output')(x)
+    flat = Flatten()(x)
+    outputs = Dense(10, activation = 'softmax', name = 'output')(flat)
     model = Model(inputs = inputs, outputs = outputs)
     model.compile(optimizer = optimizer, metrics = ['acc'],
                   loss = 'categorical_crossentropy')
@@ -63,4 +64,4 @@ print(search.best_params_)   # serch.best_estimator_
 score = search.score(x_test,y_test)
 print("score : ", score)
 #{'optimizer': 'adadelta', 'drop': 0.1, 'batch_size': 50}
-#score :  0.9589999914169312
+#score :  0.9865000247955322

@@ -1,7 +1,7 @@
 from keras.datasets import mnist
 from keras.utils import np_utils
 from keras.models import Sequential, Model
-from keras.layers import Input, Dropout, Conv2D, Flatten, MaxPooling2D, Dense
+from keras.layers import Input, Dropout, Conv2D, Flatten, MaxPooling2D, Dense, LSTM
 import numpy as np
 from sklearn.metrics import accuracy_score
 
@@ -11,8 +11,8 @@ from sklearn.metrics import accuracy_score
 print(x_train.shape)                                   # (60000, 28, 28)
 print(x_test.shape)                                    # (10000, 28, 28)
 
-x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)/225
-x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)/225
+# x_train = x_train.reshape(x_train.shape[0], 28*28)/225
+# x_test = x_test.reshape(x_test.shape[0], 28*28)/225
 
 # one hot encoding
 y_train = np_utils.to_categorical(y_train)
@@ -24,8 +24,8 @@ print(y_train.shape)                                    # (60000, 10)
 
 # gridsearch에 넣기위한 모델(모델에 대한 명시 : 함수로 만듦)
 def build_model(drop=0.5, optimizer = 'adam'):
-    inputs = Input(shape= (28*28, ), name = 'input')
-    x = Dense(51, activation = 'relu', name = 'hidden1')(inputs)
+    inputs = Input(shape= (28,28 ), name = 'input')
+    x = LSTM(51, activation = 'relu', name = 'hidden1')(inputs)
     x = Dropout(drop)(x)
     x = Dense(256, activation = 'relu', name = 'hidden2')(x)
     x = Dropout(drop)(x)

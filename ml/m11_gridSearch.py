@@ -21,11 +21,15 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, rando
 
 
 parameters = [
-    {"C": [1, 10, 100, 1000], "kernel":["linear"]},
-    {"C": [1, 10, 100, 1000], "kernel":["rbf"], "gamma":[0.001, 0.0001]},
-    {"C": [1, 10, 100, 1000], "kernel":["sigmoid"], "gamma":[0.001, 0.0001]},
+    {"C": [1, 10, 100, 1000], "kernel":["linear"]},                           #4가지
+    {"C": [1, 10, 100, 1000], "kernel":["rbf"], "gamma":[0.001, 0.0001]},     #8가지
+    {"C": [1, 10, 100, 1000], "kernel":["sigmoid"], "gamma":[0.001, 0.0001]}, #8가지 총 20가지경우
+    
 
 ]
+
+
+
 
 Kfold = KFold(n_splits=5, shuffle=True)
 model = GridSearchCV(SVC(), parameters, cv=Kfold)
