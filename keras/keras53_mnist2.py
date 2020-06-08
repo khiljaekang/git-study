@@ -17,7 +17,7 @@ print(y_test.shape)                                       # (10000,)
 
 print(x_train[0].shape)                                 # (28, 28)
 # plt.imshow(x_train[0], 'gray')                          # '2차원'을 집어넣어주면 수치화된 것을 이미지로 볼 수 있도록 해줌    
-# # plt.imshow(x_train[0])                                  # 색깔로 나옴
+# # plt.imshow(x_train[0])                                # 색깔로 나옴
 # plt.show()                                              # 그림으로 보여주기
 
 
@@ -25,7 +25,7 @@ print(x_train[0].shape)                                 # (28, 28)
 from keras.utils import np_utils
 y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
-print(y_train.shape)                                      #  (60000, 10)
+print(y_train.shape)                                      #  (60000, 10)   0~9까지 분류 
 
 # 데티어 전처리 2. 정규화( MinMaxScalar )    => x 값                                           
 x_train = x_train.reshape(60000, 28, 28, 1).astype('float32') /255  
@@ -43,14 +43,16 @@ model.add(Conv2D(100, (2, 2), input_shape  = (28, 28, 1), padding = 'same'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(120, (2, 2), padding = 'same'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(80, (2, 2), padding = 'same'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(60, (2, 2), padding = 'same'))
+model.add(Conv2D(80, (2, 2), padding = 'same'))  #padding : 경계 처리 방법을 정의합니다.
+model.add(MaxPooling2D(pool_size=2))             #‘valid’ : 유효한 영역만 출력이 됩니다. 따라서 출력 이미지 사이즈는 입력 사이즈보다 작습니다.
+model.add(Conv2D(60, (2, 2), padding = 'same'))  #‘same’ : 출력 이미지 사이즈가 입력 이미지 사이즈와 동일합니다.
 model.add(Conv2D(40, (2, 2),padding = 'same'))
 model.add(Conv2D(20, (2, 2),padding = 'same'))
 model.add(Conv2D(10, (2, 2), padding='same'))
 model.add(Flatten())
 model.add(Dense(10, activation='softmax'))                # 다중 분류
+
+
 
 model.summary()
 
