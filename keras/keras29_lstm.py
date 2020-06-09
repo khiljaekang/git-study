@@ -17,6 +17,9 @@ x = x.reshape(x.shape[0], x.shape[1], 1)  # x.shape[0] = 4 / x.shape[1] = 3 / da
 print(x.shape)                            # (4, 3, 1)      / rehape확인 : 모든 값을 곱해서 맞으면 똑같은 거임
 
 
+# reshape()의 '-1'이 의미하는 바는, 변경된 배열의 '-1' 위치의 차원은 "원래 배열의 길이와 남은 차원으로 부터 추정"이 된다는 뜻입니다.
+
+
 #2. 모델구성
 model = Sequential()
 model.add(LSTM(10, activation='relu', input_shape = (3, 1))) # LSTM설정 : ( 열, 몇개씩 짤라서 작업할 것인가)

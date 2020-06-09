@@ -25,7 +25,8 @@ print(y.shape)                                   # (10000, 4)
 
 x = x.fillna(method = 'bfill')
 test = test.fillna(method = 'bfill')
-np_test = test.values                               #넘파이로 바꿈
+np_train = train.values
+np_test = test.values                          #넘파이로 바꿈
 # print(type(test))
 
 print(type(np_test))
