@@ -30,8 +30,8 @@ np_test = test.values                          #넘파이로 바꿈
 # print(type(test))
 
 print(type(np_test))
-# np_test = pd.DataFrame(np_test)
-# print(type(np_test))
+#<class 'numpy.ndarray'>
+
 
 print(np_test)
 
@@ -45,7 +45,7 @@ np_test = scaler.transform(np_test)
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(
-    x, y, random_state=1, test_size = 0.4)
+    x, y, random_state=1, test_size = 0.3)
 
 
 
