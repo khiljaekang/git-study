@@ -12,12 +12,15 @@ y_val = np.array([101,102,103,104,105])
 
 #2.모델구성
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
+from keras.optimizers import Nadam
+nadam = Nadam()
 
 model = Sequential()
 
 model.add(Dense(110, input_dim= 1 ))
 model.add(Dense(80))
+model.add(Dropout(0.3))
 model.add(Dense(8))
 model.add(Dense(8))
 model.add(Dense(10))
@@ -27,9 +30,10 @@ model.add(Dense(4))
 model.add(Dense(4))
 model.add(Dense(4))
 model.add(Dense(1))
+model.summary()
 
 
-
+'''
 
 #3.훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
@@ -59,3 +63,4 @@ from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 :", r2)
 
+'''

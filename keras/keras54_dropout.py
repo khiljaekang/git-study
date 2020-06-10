@@ -64,7 +64,7 @@ model.add(Flatten())
 model.add(Dense(10, activation='softmax'))                # 다중 분류
 
 model.summary()
-
+'''
 
 #3. 훈련                      # 다중 분류
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics= ['acc']) 
@@ -77,3 +77,5 @@ hist = model.fit(x_train, y_train, epochs= 10, batch_size= 64,
 loss, acc = model.evaluate(x_test, y_test, batch_size= 64)
 print('loss: ', loss)
 print('acc: ', acc)
+
+'''

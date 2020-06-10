@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+
+
 #헤더가 하나 빠지니까 데이터는 10000개 
 
 train = pd.read_csv('./data/dacon/comp1/train.csv', header=0, index_col=0)
@@ -46,30 +48,29 @@ np_test = scaler.transform(np_test)
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(
-    x, y, random_state=1, test_size = 0.3)
+    x, y, random_state=1, test_size= 0.2)
 
 
+print(x.shape)
+print(y.shape)
 
-
-
+x_train = x_train.reshape(-1, 71, 1)
+x_test = x_test.reshape(-1, 71, 1)
 
 
 from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, MaxPooling1D, Conv1D, Flatten
 from keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor = 'val_loss', mode = 'min', patience = 10)
 
-es = EarlyStopping()
-
-model = Sequential()
-model.add(Dense(100, input_dim= 71, activation= 'relu'))
-model.add(Dropout(0.2))
-model.add(Dense(140, activation= 'relu'))
-model.add(Dense(160, activation= 'relu'))
-model.add(Dropout(0.2))
-model.add(Dense(100, activation= 'relu'))
-model.add(Dense(40, activation= 'relu'))
+#2. model
+model = Sequential()   
+model.add(Conv1D(100, 2, activation='relu', padding= 'same', input_shape= (71, 1)))
+model.add(MaxPooling1D())   
+model.add(Conv1D(80, 2, padding= 'same',))
+model.add(Dense(40))   
+model.add(Flatten())
 model.add(Dense(4))
-
 model.summary()
 
 
@@ -77,8 +78,8 @@ model.summary()
 #3.훈련
 es = EarlyStopping(monitor = 'val_loss', mode = 'min', patience = 10)
 model.compile(loss='mae', optimizer='adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=50, batch_size=10, 
-          validation_split= 0.2, callbacks = [es])
+model.fit(x_train, y_train, epochs=1, batch_size=10, callbacks=[es] 
+          )
 
 #4.평가, 예측
 
@@ -90,6 +91,7 @@ print("mae :", mae)
 # print(type(np_test))
 
 print(np_test)
+np_test = np_test.reshape(-1,71,1)
 y_pred = model.predict(np_test)
 print(y_pred)
 # y_pred = pd.DataFrame(y_pred)
@@ -103,12 +105,14 @@ y_pred = pd.DataFrame({
 })
 y_pred = pd.DataFrame(y_pred)
 
-y_pred.to_csv("./data/dacon/comp1/y_predict2.csv")
+y_pred.to_csv("./data/dacon/comp1/y_predict3.csv")
 
 
-
+#scikit-learn 버전 0.22.1
 
 
 #서브밋 파일을 만든다.
 #y_pred.to_csv(경로)
+
+
 

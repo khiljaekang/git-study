@@ -7,11 +7,13 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from keras.callbacks import EarlyStopping
 from keras.layers import Dense, LSTM, Conv1D, MaxPooling1D,Flatten
+from sklearn.svm import SVC
 
 #1. data
 x = pd.read_csv('./data/dacon/comp3/train_features.csv', index_col =0, header = 0)
 y = pd.read_csv('./data/dacon/comp3/train_target.csv', index_col = 0, header = 0)
 test = pd.read_csv('./data/dacon/comp3/test_features.csv', index_col = 0, header = 0)
+
 
 
 print(x.shape)           #(1050000, 5)
@@ -29,6 +31,8 @@ print(test)
 x = x.values
 y = y.values
 x_pred = test.values
+
+
 
 
 # scaler
@@ -67,15 +71,15 @@ model.summary()
 
 
 # EarlyStopping
-es = EarlyStopping(monitor = 'val_loss', mode = 'auto', patience = 50)
+# es = EarlyStopping(monitor = 'val_loss', mode = 'auto', patience = 50)
 
 #3. compile, fit
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['mse'])
-hist = model.fit(x_train, y_train, epochs = 100, batch_size = 64, 
-                 validation_split= 0.2, callbacks = [es])
+hist = model.fit(x_train, y_train, epochs = 100, batch_size = 32, 
+                 validation_split= 0.2 )
 
 #4. evaluate
-loss_mspe = model.evaluate(x_test, y_test, batch_size= 64)
+loss_mspe = model.evaluate(x_test, y_test, batch_size= 32)
 print('loss_mspe: ', loss_mspe)
 
 y_pred = model.predict(x_pred)

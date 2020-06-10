@@ -6,6 +6,9 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+
+
 
 # 1. 데이터
 x, y = load_iris(return_X_y = True)
@@ -30,14 +33,14 @@ x_train, x_test, y_train, y_test = train_test_split(
 # ]
 
 param = [
-    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['linear']},
-    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['rbf'], "svc__gamma": [0.001, 0.0001]},
-    {"svc__C": [1, 10, 100, 1000], "svc__kernel": ['sigmoid'], "svc__gamma": [0.001, 0.0001]}
+    {"randomforestclassifier__n_jobs": [1], "randomforestclassifier__n_estimators": [10]},
+    {"randomforestclassifier__max_features": [1, 10, 100], "randomforestclassifier__max_leaf_nodes": [1, 10, 100]},
+    # {"randomforestclassifier__n_jobs": [1, 10, 100, 1000], "randomforestclassifier__n_jobs": ['sigmoid'], "svc__gamma": [0.001, 0.0001]}
 ]
 
 # 2. 모델
-# pipe = Pipeline([('scaler', MinMaxScaler()), ("svm", SVC())]) # 파이프라인은 버전에 상관없이 사용가능.
-pipe = make_pipeline(MinMaxScaler(), SVC())
+pipe = Pipeline([('scaler', MinMaxScaler()), ("randomforestclassifier", RandomForestClassifier())]) # 파이프라인은 버전에 상관없이 사용가능.
+# pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
 
 model = RandomizedSearchCV(pipe, param_distributions = param, cv = 5)
 
