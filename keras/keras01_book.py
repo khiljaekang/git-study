@@ -18,3 +18,6 @@ loss, acc = model.evaluate(x, y, batch_size=1)
 
 print("loss :", loss)
 print("acc : ", acc)
+
+#모델구성#
+
