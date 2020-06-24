@@ -10,9 +10,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from numpy import expand_dims
 from keras.preprocessing.image import img_to_array
 
-caltech_dir = './data/project/logos'
-brands =['audi logo', 'benz logo', 'bmw logo', 'chevolet logo', 'honda logo', 'hyundai logo',
-             'kia logo', 'lexus logo', 'toyota logo', 'volvo logo']
+caltech_dir = './free'
+brands =['covid', 'normal']
 nb_classes = len(brands)             #nb_classes 개수 정의
 
 print
@@ -38,7 +37,7 @@ for idx, brand in enumerate(brands):
     print(idx)
     
     image_dir = caltech_dir + '/' + brand  ### image_dir 내 하위 디렉토리(label)를 가져온다
-    files = glob.glob(image_dir + "/*.jpg")  ### caltech_dir 는 이미지 경로
+    files = glob.glob(image_dir + "/*.*")  ### caltech_dir 는 이미지 경로
     print(brand, " 파일 길이 : ", len(files)) ###glob 모듈에 대해 알아보도록 하죠. glob는 파일들의 목록을 뽑을 때 사용
     for i, f in enumerate(files):
         img = Image.open(f)
@@ -65,9 +64,4 @@ print(x_train.shape)   #(4400, 150, 150, 3)
 print(x_test.shape)    #(1100, 150, 150, 3)
 print(y_train.shape)   #(4400, 10)
 print(y_test.shape)    #(1100, 10)
-
-
-
-
-
 
