@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 # y = dataset.target
 
 x, y = load_boston(return_X_y=True)                    # x, y가 그냥 들어간다.
+print(x.shape)
+print(y.shape)
+
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size = 0.8,
                                                     shuffle = True, random_state = 66)
@@ -56,3 +59,4 @@ for thresh in thresholds:                             # 전체 컬럼 수만큼 
 
     print("Thresh=%.3f, n = %d, R2 : %.2f%%" %(thresh, select_x_train.shape[1],
                                                 score*100.0))
+
