@@ -40,6 +40,8 @@ for thres in threshold:
     # result = selection_model.evals_result()
     # print("eval's result : ", result)
 
+    model.save_model("./model/xgb_save/breast_cancer_thresh=%.3f-acc=%.2f.model"%(thres, acc))
+
 # Thresh=0.001, n = 30, ACC : 96.49%
 # Thresh=0.002, n = 29, ACC : 96.49%
 # Thresh=0.002, n = 28, ACC : 96.49%
