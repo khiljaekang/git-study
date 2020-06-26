@@ -54,7 +54,7 @@ es = EarlyStopping(monitor = 'loss', patience=100, mode = 'min')
 
 #3. 실행
 model.compile(optimizer='adam', loss = 'mse')
-model.fit(x, y, epochs =2000, batch_size = 1, callbacks = [es] )                
+model.fit(x, y, epochs =1, batch_size = 1, callbacks = [es] )                
 
 #4. 예측
 x_predict = array([5, 6, 7])               # (3, )

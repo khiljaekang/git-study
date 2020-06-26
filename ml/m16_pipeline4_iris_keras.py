@@ -61,7 +61,7 @@ def kang_model(drop=0.5, optimizer = 'adam'):
     model = Model(inputs = inputs, outputs = outputs)
     model.compile(optimizer = optimizer, metrics = ['acc'],
                   loss = 'categorical_crossentropy')
-    return model
+    # return model
 
 # parameter
 def create_hyperparameters():

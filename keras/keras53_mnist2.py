@@ -33,6 +33,7 @@ x_test = x_test.reshape(10000, 28, 28, 1).astype('float32') /255.   # 뒤에 ' .
 #             cnn 사용을 위한 4차원       # 타입 변환       # (x - min) / (max - min) : max =255, min = 0                                      
 #                                         : minmax를 하면 소수점이 되기때문에 int형 -> float형으로 타입변환
 
+print(x_train)
 
 #2. 모델 구성
 # 0 ~ 9까지 씌여진 크기가 (28*28)인 손글씨 60000장을 0 ~ 9로 분류하겠다. ( CNN + 다중 분류)

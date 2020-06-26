@@ -1,12 +1,14 @@
+import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.utils.testing import all_estimators
+from sklearn.datasets import load_iris
 import warnings                                
 
 warnings.filterwarnings('ignore')           # warning이라는 에러에 대해서 넘어가겠다.
 
-iris = pd.read_csv('D:/Study/data/csv/iris.csv', header = 0)
+iris = pd.read_csv('D:/Study/data/csv/iris.csv', header = None)
 
 x = iris.iloc[:, 0:4]
 y = iris.iloc[:, 4]

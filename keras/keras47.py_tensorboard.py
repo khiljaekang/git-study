@@ -31,6 +31,9 @@ print(type(dataset))                           # numpy.ndarray
 x = dataset[:, 0:4]                            # [ : ] 모든행 가져오고, [0 : 4] 0~3까지
 y = dataset[:, 4]                              # [ : ] 모든행 가져오고, [  : 4] 4번째
 
+print(x.shape)
+print(x_predict.shape)
+print(y.shape)
 
 # reshape( , , )
 x = x.reshape(x.shape[0], x.shape[1], 1)
@@ -95,9 +98,9 @@ plt.title('loss & acc')
 plt.ylabel('loss, acc')
 plt.xlabel('epoch')
 plt.legend(['train loss','val loss','train acc','val acc'])    # 선에 대한 색깔과 설명이 나옴
-# plt.show()                                          # 그래프 보여주기
+plt.show()                                          # 그래프 보여주기
 
-'''
+
 #4. 평가, 예측
 loss, mse = model.evaluate(x, y)
 
@@ -107,4 +110,4 @@ print('mse :',mse )
 
 y_predict = model.predict(x_predict)
 print(y_predict)
-'''
+

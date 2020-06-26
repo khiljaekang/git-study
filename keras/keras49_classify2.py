@@ -7,7 +7,8 @@ from keras.utils import np_utils
 #1. 데이터
 x = np.array(range(1, 11))
 y = np.array([1, 2, 3, 4, 5, 1, 2, 3, 4, 5])
-
+print(y)
+print(y.shape)
 
 
 
@@ -58,15 +59,16 @@ x_pred = np.array([1, 2, 3, 4, 5])
 y_predict = model.predict(x_pred, batch_size=1)
 print(y_predict)
 
-y_predict = np.argmax(y_predict,axis=1) + 1
+y_predict = np.argmax(y_predict,axis=1) 
 #argmax는 최대값을 뽑아 낸다. axis 는 축. 
 
 print(y_predict)
-print(y_predict.shape)                               # (3, 6)
+print(y_predict.shape)                               
 """x하나 집어 넣으면 6개가 나옴 (one_hot_encoding때문)
    0  1  2   3   4   5
 """
 #과제 dim을 6에서 5로 변경 
 #y_predict를 실수형을 정수형으로 변경 
+
 
 

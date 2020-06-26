@@ -28,15 +28,15 @@ print(y.shape)              # (569,)
 
 # 1-1. PCA
 x = pca.fit_transform(x)
-print(x.shape)              # (569, 25)
+print(x.shape)              # (569, 15)
 
 
 # 1-2. split
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size = 0.2,
     shuffle = True, random_state = 77)
-print(x_train.shape)                # (455, 25)
-print(x_test.shape)                 # (114, 25)
+print(x_train.shape)                # (455, 15)
+print(x_test.shape)                 # (114, 15)
 print(y_train.shape)                # (455,)
 print(y_test.shape)                 # (114,)
 

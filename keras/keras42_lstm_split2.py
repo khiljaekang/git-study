@@ -37,6 +37,7 @@ print(y.shape)
 x_predict = dataset[-6:, 0:4]
 # y_predict = dataset[-6:, 4]                    # model로 에측 할 것이기 때문에 필요 없다.
 print(x_predict.shape)
+print(x_predict)
 
 
 # reshape( , , )
@@ -70,7 +71,7 @@ es = EarlyStopping(monitor = 'loss', patience=100, mode = 'min')
 
 #3. 실행
 model.compile(loss = 'mse', optimizer='adam', metrics= ['mse'])
-model.fit(x_train, y_train, epochs =800, batch_size = 16 , validation_split= 0.25,
+model.fit(x_train, y_train, epochs =100, batch_size = 16 , validation_split= 0.25,
          callbacks = [es])                
 
 
@@ -84,3 +85,5 @@ print('mse :',mse )
 
 y_predict = model.predict(x_predict)
 print(y_predict)
+
+
