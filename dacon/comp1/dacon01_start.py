@@ -24,6 +24,8 @@ y = train.iloc[:, -4:]
 print(x.shape)                                   # (10000, 71)
 print(y.shape)                                   # (10000, 4)
 
+  
+
 x = x.fillna(method = 'bfill')
 test = test.fillna(method = 'bfill')
 np_train = train.values
@@ -32,7 +34,7 @@ np_test = test.values                          #넘파이로 바꿈
 
 print(type(np_test))
 #<class 'numpy.ndarray'>
-
+print(train.isnull().sum())     
 
 print(np_test)
 
@@ -111,4 +113,5 @@ y_pred.to_csv("./data/dacon/comp1/y_predict2.csv")
 
 #서브밋 파일을 만든다.
 #y_pred.to_csv(경로)
+
 
