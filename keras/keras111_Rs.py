@@ -25,17 +25,17 @@ print(y_train.shape)                                    # (60000, 10)
 #2. model
 
 # gridsearch에 넣기위한 모델(모델에 대한 명시 : 함수로 만듦)
-def build_model(drop=0.5, optimizer = Adam, lr = 0.01):
+def build_model(drop=0.5, optimizer = Adam, lr = 0.01, act = 'relu'):
     inputs = Input(shape= (28*28, ), name = 'input')
-    x = Dense(48, activation = 'relu', name = 'hidden1')(inputs)
+    x = Dense(48, activation = act, name = 'hidden1')(inputs)
     x = Dropout(drop)(x)
-    x = Dense(256, activation = 'relu', name = 'hidden2')(x)
+    x = Dense(256, activation = act, name = 'hidden2')(x)
     x = Dropout(drop)(x)
-    x = Dense(128, activation = 'relu', name = 'hidden3')(x)
+    x = Dense(128, activation = act, name = 'hidden3')(x)
     x = Dropout(drop)(x)
     outputs = Dense(10, activation = 'softmax', name = 'output')(x)
     model = Model(inputs = inputs, outputs = outputs)
-
+   
     opt = optimizer(lr = lr)
 
     model.compile(optimizer = opt, metrics = ['acc'],
@@ -45,11 +45,12 @@ def build_model(drop=0.5, optimizer = Adam, lr = 0.01):
 # parameter
 def create_hyperparameters(): # epochs, node, acivation 추가 가능
     batches = [384, 256]
+    activation =['sigmoid', 'relu', 'elu', 'selu','tanh']
     optimizers = [Adam, RMSprop, SGD, Adadelta, Adagrad, Nadam]
     learning_rate = [0.01, 0.1, 0.25]
     dropout = np.linspace(0.3, 0.5, 3).tolist()                           
-    return {'batch_size' : batches, 'optimizer': optimizers,  'lr':learning_rate, 
-           'drop': dropout}                                       
+    return {'batch_size' : batches, 'optimizer': optimizers, 'lr':learning_rate, 
+           'drop': dropout, 'act':activation}                                       
 
 # wrapper
 from keras.wrappers.scikit_learn import KerasClassifier          
