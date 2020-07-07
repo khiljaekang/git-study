@@ -1,11 +1,11 @@
-from keras.datasets import reuters
+from keras.datasets import imdb
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # 1. 데이터
 
-(x_train, y_train), (x_test, y_test) = reuters.load_data(num_words = 10000, test_split = 0.2)
+(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words = 2000,) #test_split = 0.2)
 
 # print(x_train.shape, x_test.shape)   # (8982, ) (2246, )
 # print(y_train.shape, y_test.shape)   # (8982, ) (2246, )
@@ -30,10 +30,10 @@ b = y_train_pd.groupby(0)[0].count()
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 
-x_train = pad_sequences(x_train, maxlen = 100, padding = 'pre')
+x_train = pad_sequences(x_train, maxlen = 111, padding = 'pre')
 # truncating은 만약 150개의 단어가 있는데 맥스렌이 100이면 50개 컷
 # padding이 pre면 앞에서 컷, post면 뒤에서
-x_test = pad_sequences(x_test, maxlen = 100, padding = 'pre')
+x_test = pad_sequences(x_test, maxlen = 111, padding = 'pre')
 
 print(x_train[0])
 # print(len(x_train[0]))
@@ -42,26 +42,31 @@ print(x_train[0])
 # x_train과 x_test shape
 # print(x_train.shape) # (8982, 100)
 # print(x_test.shape)  # (2246, 100)
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
+# y_train = to_categorical(y_train)
+# y_test = to_categorical(y_test)
 
 # 2. 모델
 
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, Flatten, Embedding
+from keras.layers import Dense, LSTM, Flatten, Embedding, Conv1D, MaxPool1D, MaxPooling1D
+from keras.layers import Bidirectional
+
 
 model = Sequential()
-# model.add(Embedding(1000, 3, input_length = 100))
-model.add(Embedding(10000, 3, input_length = 100))
-
-model.add(LSTM(5))
-model.add(Dense(46, activation = 'softmax'))
+# model.add(Embedding(2000, 3, input_length = 111))
+model.add(Embedding(2000, 128))
+model.add(Conv1D(10, 5, padding='valid', activation='relu', strides=1))
+model.add(MaxPooling1D(pool_size=4))
+model.add(Bidirectional(LSTM(10)))     #bidirectional 양방향으로 랩핑하겠다(lstm을 한번 더함. 그래서 파라미터 두배가 됨.)
+model.add(Dense(1, activation = 'sigmoid'))
 
 model.summary()
 
+
+'''
 # 3. 컴파일
 
-model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['acc'])
+model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['acc'])
 history = model.fit(x_train, y_train, epochs = 10, batch_size = 100, validation_split = 0.2)
 
 acc= model.evaluate(x_test, y_test, batch_size = 100)[1]
@@ -80,6 +85,10 @@ plt.grid()
 plt.xlabel('epoch')
 plt.ylabel('loss')
 plt.show()
-'''
-conda create -n tf114 python=3.6.5 anaconda
+
+#1. imdb 검색해서 데이터 내용 확인
+# word_size 전체 데이터 부분 변경해서 최상값 확인 
+# 주간과제 : grouby()사용법 숙지할 것 
+# 인덱스를 단어로 바꿔주는 함수 찾을 것
+# 125, 126 번 튠해라 
 '''
