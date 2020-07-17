@@ -3,10 +3,10 @@ import os, glob, numpy as np
 from keras.models import load_model
 
 ### predict 이미지 불러오기
-caltech_dir = './data/project/test_image'
+caltech_dir = './data/project/test_logoimage'
 
-image_w = 150
-image_h = 150
+image_w = 112
+image_h = 112
 
 ### pred 이미지를 Data 변환
 X = []
@@ -24,7 +24,7 @@ for i, f in enumerate(files):
 x_pred = np.array(X)
 
 ### modelcheckpint Load
-model = load_model('D:/Study/data/project/checkpoint/02-2.2268.hdf5')
+model = load_model('D:/Study/data/project/model_save/best.hdf5')
 
 ### 예측
 y_pred = model.predict(x_pred)
