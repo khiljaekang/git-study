@@ -10,8 +10,8 @@ import time
 start = time.time()
 
 # load data
-x = np.load('D:/teamproject/data/dog_img224.npy')
-y = np.load('D:/teamproject/data/dog_label224.npy')
+x = np.load('D:/teamproject/data/dog_img.npy')
+y = np.load('D:/teamproject/data/dog_label.npy')
 
 print(x.shape) # (7160, 112, 112, 3)
 print(y.shape) # (7160, 11)
@@ -22,11 +22,12 @@ print('======== data load ========')
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state = 66)
 
 # model
-takemodel = DenseNet201(include_top=False, input_shape = (224, 224, 3))
-
+takemodel = MobileNet(include_top=False, input_shape = (112, 112, 3),)
+takemodel.trainable=False
 model = Sequential()
 model.add(takemodel)
 model.add(Flatten())
+model.add(Dense(300,activation="relu"))
 model.add(Dense(12, activation = 'softmax'))
 
 model.summary()
@@ -37,12 +38,14 @@ es = EarlyStopping(monitor= 'val_loss', patience = 25, verbose =1)
 
 #3. compile, fit
 model.compile(optimizer = Adam(1e-4), loss = 'categorical_crossentropy', metrics = ['acc'])                             
-hist = model.fit(x_train, y_train, epochs = 100, batch_size = 2, verbose = 1, 
+hist = model.fit(x_train, y_train, epochs = 2, batch_size = 64, verbose = 1, 
                  validation_split =0.2 , shuffle = True, callbacks = [es, cp])
 
-
+for layer in model.layers:
+    weights = layer.get_weights()
+    print(weights)
 #4. evaluate
-loss_acc = model.evaluate(x_test, y_test, batch_size = 2)
+loss_acc = model.evaluate(x_test, y_test, batch_size = 12)
 print('loss_acc: ' ,loss_acc)
 
 end = time.time()
