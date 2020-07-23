@@ -57,4 +57,4 @@ def face_detector(path, folder, w, h):
     print('---------- END %s ---------'%(folder))
 
     
-face_detector(train_path, 'Dachshund', 300, 300)
+face_detector(train_path, 'Maltese', 128, 128)

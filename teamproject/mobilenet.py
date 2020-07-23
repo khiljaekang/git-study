@@ -23,29 +23,29 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_
 
 # model
 takemodel = MobileNet(include_top=False, input_shape = (112, 112, 3),)
-takemodel.trainable=False
+# takemodel.trainable=False
 model = Sequential()
 model.add(takemodel)
 model.add(Flatten())
-model.add(Dense(300,activation="relu"))
+# model.add(Dense(300,activation="relu"))
 model.add(Dense(12, activation = 'softmax'))
 
 model.summary()
 
-cp = ModelCheckpoint('D:/teamproject/checkpoint/best_Xception_2.hdf5', monitor = 'val_loss',
+cp = ModelCheckpoint('D:/teamproject/checkpoint/best_MobileNet_128.hdf5', monitor = 'val_loss',
                     save_best_only = True, save_weights_only = False)
 es = EarlyStopping(monitor= 'val_loss', patience = 25, verbose =1)
 
 #3. compile, fit
 model.compile(optimizer = Adam(1e-4), loss = 'categorical_crossentropy', metrics = ['acc'])                             
-hist = model.fit(x_train, y_train, epochs = 2, batch_size = 64, verbose = 1, 
+hist = model.fit(x_train, y_train, epochs = 100, batch_size = 128, verbose = 1, 
                  validation_split =0.2 , shuffle = True, callbacks = [es, cp])
 
-for layer in model.layers:
-    weights = layer.get_weights()
-    print(weights)
+# for layer in model.layers:
+#     weights = layer.get_weights()
+#     print(weights)
 #4. evaluate
-loss_acc = model.evaluate(x_test, y_test, batch_size = 12)
+loss_acc = model.evaluate(x_test, y_test, batch_size = 128)
 print('loss_acc: ' ,loss_acc)
 
 end = time.time()
