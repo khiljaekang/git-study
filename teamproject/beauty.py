@@ -102,7 +102,7 @@ def postprocess(img):
 img1 = dlib.load_rgb_image('D:/study/faceimages/images/junghyun.png')
 img1_faces = align_faces(img1)
 
-img2 =dlib.load_rgb_image('D:/study/faceimages/makeup/licEnH3rBjSA.png')
+img2 =dlib.load_rgb_image('D:/study/faceimages/makeup/vFG656.png')
 img2_faces = align_faces(img2)
 
 # fig, axes = plt.subplots(1, 2, figsize=(16, 10))
