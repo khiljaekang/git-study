@@ -38,7 +38,7 @@ model.add(Flatten())
 model.add(Dense(10,activation = 'softmax'))  
 
 model.summary()
-
+'''
 #3. fit
 model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['acc'])
 model.fit(x_train, y_train, epochs= 50, batch_size = 32,
@@ -52,3 +52,4 @@ print('acc: ', acc)
 
 ##loss:  0.4829740544674918
 ##acc:  0.8980000019073486
+'''

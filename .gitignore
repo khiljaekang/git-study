@@ -4,3 +4,5 @@
 *.txt
 *.hdf5
 *.h5
+*.png
+model/*

@@ -1,3 +1,6 @@
+# keras 56번 끌어옴
+# input_dim = 154 로 모델 만드시오.
+
 import numpy as np
 
 
@@ -32,12 +35,19 @@ print(x_train.shape)                              # (60000, 784)
 print(x_test.shape)                               # (10000, 784)
 
 
+from sklearn.decomposition import PCA
+pca = PCA(n_components = 154)
+x_train = pca.fit_transform(x_train)
+x_test = pca.transform(x_test)
+print(x_train.shape)                              # (60000, 154)
+print(x_test.shape)                               # (10000, 154)
+
 
 #2. 모델 구성
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 model = Sequential()
-model.add(Dense(200, activation = 'relu',input_dim = 28*28))
+model.add(Dense(200, activation = 'relu',input_dim = 154))
 model.add(Dense(100, activation = 'relu'))
 model.add(Dropout(0.2))                                             # Dropout 사용
 model.add(Dense(80, activation = 'relu'))
@@ -67,5 +77,3 @@ model.fit(x_train, y_trian, epochs = 100, batch_size = 64,
 loss, acc = model.evaluate(x_test, y_test, batch_size= 64)
 print('loss: ', loss)
 print('acc: ', acc)
-
-# acc:  0.9785000085830688

@@ -3,6 +3,7 @@ from imutils import face_utils
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import h5py
 
 start = time.time()
 
@@ -11,10 +12,15 @@ train_path = 'D:/teamproject/breed'
 def face_detector(path, folder, w, h):
     print('---------- START %s ---------'%(folder))
     image_dir = path + '/'+folder+'/'
-    X = []
 
     f = os.listdir(image_dir)           # 폴더내 파일 이름 찾기
 
+    # X = []
+
+    hdf = h5py.File('D:/teamproject/data/pekingese.hdf5', 'a')
+    imageset = hdf.create_dataset('pekingese', (500, w, h, 3), maxshape=(None, w, h, 3))
+
+    k = 0
     for filename in f:                  # 파일 별로 이미지 불러오기
         img = cv2.imread(image_dir + filename)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # opencv는 BGR로 불러 들임으로 볼 때 우리가 원하는 색으로 보기 위해 RGB로
@@ -24,7 +30,7 @@ def face_detector(path, folder, w, h):
         detector = dlib.cnn_face_detection_model_v1('D:/teamproject/weight/dogHeadDetector.dat')
         dets = detector(img, upsample_num_times=1)
 
-        x = X.append
+        # x = X.append
 
         for i, d in enumerate(dets):
 
@@ -47,14 +53,16 @@ def face_detector(path, folder, w, h):
             cropping = img[y1:y2, x1:x2]
             crop = cv2.resize(cropping, dsize = (w, h), interpolation = cv2.INTER_LINEAR)
 
-            x(crop/255)
+            imageset[k] = crop.reshape(-1, w, h, 3)/255
+            # x(crop/255)
+            k = k + 1
         
         ''' 견종별로 따로 따로 저장 '''
-    images = np.array(X)
+    # images = np.array(X)
 
-    np.save('D:/teamproject/data/face_image_%s.npy'%(folder), images)
+    # np.save('D:/teamproject/data/face_image_%s.npy'%(folder), images)
 
     print('---------- END %s ---------'%(folder))
 
     
-face_detector(train_path, 'Maltese', 128, 128)
+face_detector(train_path, 'Pekingese', 512, 512)
