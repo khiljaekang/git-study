@@ -2,15 +2,15 @@ import cv2
 import numpy as np
 import h5py
 
-dataset = np.load('D:/teamproject/data/image_kface_front')
+path = 'D:/face'
 
-def resize(dataset, w, h):
+def resize(path, w, h):
 
-    f = h5py.File('D:/data/face_hdf5.hdf5','a')    # 'w' : write = 없으면 생성. 있으면 리셋 후 재생성
+    f = h5py.File('D:/teamproject/data/70400.hdf5', 'a')    # 'w' : write = 없으면 생성. 있으면 리셋 후 재생성
                                                     # 'r' : read  = 읽기 전용
                                                     # 'a' :       = 없으면 생성, 있으면 갱신  
 
-    imageset = f.create_dataset('imageset%d'%(w), (dataset.shape[0], w, h, 3)) #, dtype='float64')
+    imageset = f.create_dataset('70400', (70400, w, h, 3)) #, dtype='float64')
 
     for i in range(len(dataset)):
         print(i)

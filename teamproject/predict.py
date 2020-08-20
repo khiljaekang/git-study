@@ -2,20 +2,21 @@ import numpy as np
 import cv2
 import re
 import os
-from keras.models import load_model
+# from keras.models import load_model
 
 # data
-path = 'D:/data/project/testset'
+path = 'D:/teamproject/testset/testset'
 
 image_w = 112
 image_h = 112
 
 x_pred = []
+
 for top, dir, f in os.walk(path): 
     for filename in f:
         img = cv2.imread(top+'/'+filename)
-        img = cv2.resize(img, dsize = (image_w, image_h), interpolation = cv2.INTER_LINEAR)
-        x_pred.append(img/255)     
+        print(top+'/'+filename)  
+
 
 x_pred = np.array(x_pred)         
 np.save('./project/project02/data/pred_img.npy', x_pred)
@@ -29,7 +30,7 @@ model = load_model('project\project02\model_save/best.hdf5')
 
 # predict
 prediction = model.predict(x_pred)
-number = np.argmax(prediction, axis = 1)
+
 
 # 카테고리 불러오기
 categories = np.load('./project/project02/data/category.npy')

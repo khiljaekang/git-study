@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import os
 import re
-path = 'D:/teamproject/breed'      # dataset 상위 폴더 경로
+path = 'D:/teamproject/testset'      # dataset 상위 폴더 경로
 
 # 카테고리
 
@@ -12,9 +12,9 @@ def categories(top_folder_path):             # folder이름으로 카테고리 �
     return category
 
 cate = categories(path)
-np.save('D:/teamproject/data/category.npy'  , cate)
+np.save('D:/teamproject/testset/testset.npy'  , cate)
 print('--------- categories save complete -------------')
-
+'''
 # 이미지 불러오기
 def load_image_label(path, w, h):   # 폴더별로 이미지 불러오고 labeling
     groups_folder_path = path
@@ -51,8 +51,9 @@ X, Y = load_image_label(path, 224, 224)
 print(X.shape)
 print(Y.shape)                                  
 
-np.save('D:/teamproject/data/dog_img224.npy', X)
-np.save('D:/teamproject/data/dog_label224.npy', Y)
+np.save('D:/teamproject/data/testset256.npy', X)
+np.save('D:/teamproject/data/testset256.npy', Y)
 print('-----Data Save Complete------')
+'''
 
 

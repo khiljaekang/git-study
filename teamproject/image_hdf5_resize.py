@@ -26,7 +26,7 @@ def resize(dataset, w, h):
 
     return 
 
-resize(dataset, 512, 512)
+resize(dataset, 256, 256)
 '''
 # label
 label = np.load('D:/data/face_label_total.npy')
