@@ -1,0 +1,234 @@
+<html>
+<head>
+  <title>BIT 4K</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+  .droppable {
+    background: Gray;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    opacity: 0.85;
+  }
+  .droppable.dragover {
+    background: #00CC71;
+    opacity: 0.85;
+  }
+  .view-gen {
+    background: Gray;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    align: center;
+    image-align: center;
+    opacity: 0.85;
+  }
+  .view-gen2 {
+    background: Gray;
+    color: #000;
+    padding: 20px 0;
+    text-align: center;
+    image-align: center;
+    align: center;
+    opacity: 0.75;
+  }
+  p {
+    margin-bottom: 0;
+  }
+
+  .controller .tbl .range-slider__value{
+
+display:none;
+
+}
+
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
+
+.controller .tbl .range-slider__value{
+
+display: inline-block;
+
+position: relative;
+
+width:45px; 
+
+padding:5px; 
+
+margin:0 0 0 8px; 
+
+font-size:13px; 
+
+color: #444; 
+
+text-align: center; 
+
+background:#e3f1fe;}
+
+
+}
+
+
+
+
+
+</style>
+</head>
+
+<body>
+<nav class = "navbar bg-dark navbar-expand-md"> 
+  <a class="navbar-brand" href="#"> BIT4K </a> 
+  <button class = "navbar-toggler"type = "button" data-toggle = "collapse"data-target = "# navbar1"> 
+    <span class = "navbar-toggler-icon"> </span> 
+  </button> 
+  <div class = "collapse navbar-collapse"id = "navbar1 "> 
+    <ul class ="navbar-nav mr-auto "> 
+      <li class ="nav-item active "> 
+        <a class="nav-link" href="/"> 홈 </a> 
+      </li> 
+      <li class = "nav-item"> 
+        <a class = "nav-link"href = "/gan"> Gan </a> 
+      </li> 
+    </ul> 
+  </div> 
+</nav>
+
+
+<p></p>
+<p align='center' class="font-weight-bold">강아지를 생성해 드립니다.</p>
+
+
+<div align="center" class="container">
+<div class="content" style = "width: 65%;" >
+<div align="center" class="droppable" id="drop_zone">
+  <p class="pc" >파일을 여기로 드래그하거나 클릭하여 이미지를 업로드하세요.</p>
+</div>
+<div class="output"></div>
+<br>
+<p align='center'>
+  <input type="button" id="btn_dog" onclick="btn_dog_click(0);" value="PREDICT" style="padding: 5px;" class="btn btn-secondary" align='center' />  
+<br><br><br>
+</p>
+<div id="result">
+  <p align='center' class="font-weight-bold">생성된 강아지</p>
+  <div class="view-gen2" id="dog_image"  style="height:20%">
+    <p>여기에 생성된 강아지가 표시됩니다.</p>
+  </div>
+  <br>
+  <form method='POST' action='download_gen' align='center'>
+    <input type='submit' value="download" style="padding: 5px;" class="btn btn-secondary"/>
+  </form>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+  
+  var dropped_files = [];
+
+  function btn_dog_click(type) {
+    if (dropped_files.length == 0) {
+      alert('이미지를 먼저 선택해주세요.');
+      return;
+    }
+
+    // 파일 업로드 및 이미지 생성 등 서버 작업 중에 표시되는 로딩 이미지
+    var div_result = document.getElementById('result');
+    div_result.innerHTML = "<p align='center' class='font-weight-bold'>강아지로 변환중입니다...</p>"
+    div_result.innerHTML += '<div class="view-gen" id="gen_image"><img id="img_result" width="200" src="_generate_image/_loading.gif" class="btn btn-secondary" /></div><br>'
+
+    var form_data = new FormData();
+    form_data.append('file', dropped_files[0]);
+    form_data.append('type', type);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'upload_gan', true);
+    xhr.send(form_data);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+          return_text = xhr.responseText
+
+          return_text = return_text.split("/")
+          div_result.innerHTML = ''
+          div_result.innerHTML += '<p align="center" class="font-weight-bold">생성된 NEW DOG</p>'
+          div_result.innerHTML += '<div align="center" class="view-gen2" id="gen_image"><img id="img_result" align="center" width="1000" height="200" src="' + '_dogvector/' + return_text[0] + '" /></div><br>'
+          div_result.innerHTML += '<form align="center" method="POST" action="download_gen2/' + return_text[0] + '"><input type="submit" value="download" style="padding: 5px;" class="btn btn-secondary"/></form>'
+      }
+    }
+  }
+
+  (function(window) {
+    function triggerCallback(e, callback) {
+      if(!callback || typeof callback !== 'function') {
+        return;
+      }
+      var files;
+      if(e.dataTransfer) {
+        files = e.dataTransfer.files;
+      } else if(e.target) {
+        files = e.target.files;
+      }
+      callback.call(null, files);
+    }
+    function makeDroppable(ele, callback) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.removeAttribute('multiple')
+      input.style.display = 'none';
+      input.addEventListener('change', function(e) {
+        triggerCallback(e, callback);
+      });
+      ele.appendChild(input);
+      
+      ele.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.add('dragover');
+      });
+
+      ele.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.remove('dragover');
+      });
+
+      ele.addEventListener('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        ele.classList.remove('dragover');
+        triggerCallback(e, callback);
+      });
+      
+      ele.addEventListener('click', function() {
+        input.value = null;
+        input.click();
+      });
+    }
+    window.makeDroppable = makeDroppable;
+  })(this);
+  (function(window) {
+    makeDroppable(window.document.querySelector('.droppable'), function(files) {
+      console.log(files);
+      var output = document.querySelector('.output');
+      output.innerHTML = '';
+      dropped_files = [];
+      for(var i=0; i<1; i++) {
+        if(files[i].type.indexOf('image/') === 0) {
+          dropped_files.push(files[i]);
+          document.getElementById('drop_zone').innerHTML = ''
+          document.getElementById('drop_zone').innerHTML += '<img id="img_preview" width="400" src="' + URL.createObjectURL(files[i]) + '" />';
+        }
+      }
+    });
+  })(this);
+  
+</script>
+
+
+</html>
