@@ -11,6 +11,8 @@ model.add(Dense(1, input_dim=1, activation='relu'))
 
 #3. 훈련
 model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
+#예측값과 목표값의 평균 절대 오차(MAE, mean absolute error)를 계산합니다.
+#(abs(y_pred - y_true))/len(y_true)
 
 model.fit(x, y, epochs= 50, batch_size=1)
 #4. 평가,예측
