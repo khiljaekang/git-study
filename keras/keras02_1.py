@@ -7,7 +7,7 @@ y = np.array([2,4,6,8,10,12,14,16,18,20])
 from keras.models import Sequential
 from keras.layers import Dense 
 
-model = Sequential() #Sequential의 뜻은 순차적, 연속적이라는 뜻. 이것은 MLP의 레이어가 순차적으로 쌓여가는 것을 의미합니다.
+model = Sequential() #Sequential의 뜻은 순차적, 연속적이라는 뜻. 이것은 MLP의 레이어가 순차적으로 쌓여가는 것을 의미합니다. MLP(Multi Layer Perceptron) -다층신경망
 model.add(Dense(3, input_dim = 1))
 model.add(Dense(4))
 model.add(Dense(5))
