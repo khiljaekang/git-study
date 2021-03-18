@@ -17,7 +17,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 print(x_train)
 print(x_test)
 
-#2. 모델구성
+#2. 모델구성 
 from keras.models import Sequential 
 from keras.layers import Dense
 model = Sequential()
