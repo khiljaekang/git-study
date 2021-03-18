@@ -69,4 +69,4 @@ print("R2 :", r2)
 #layers  5개이상
 #노드의 개수 10개 이상
 #batch_size 8이하
-#epochs는 30이상
+#epochs는 30이상 
