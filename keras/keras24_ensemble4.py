@@ -87,7 +87,7 @@ model.fit(x1_train,
         # validation_data = (x_val, y_val)
         validation_split= 0.25, verbose=1 #,callbacks = [es]
         )
-
+ 
 
 
 
