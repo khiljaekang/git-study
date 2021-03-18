@@ -27,7 +27,7 @@ model.add(Dense(2))
 model.add(Dense(1))
 
 #3. 훈련
-model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy']) # Mean Squared Error (손실함수) 정답에 대한 오류, 정답에 가까울수록 작은 값 
 model.fit(x, y, epochs=200, batch_size=100)
 
 #4. 평가,예측
