@@ -85,6 +85,6 @@ x_predict = x_predict.reshape(1, 3, 1)       # x값 (4, 3, 1)와 동일한 shape
 
 print(x_predict)
 
-y_predict = model.predict(x_predict)
+y_predict = model.predict(x_predict) 
 print(y_predict)
 
