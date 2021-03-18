@@ -36,7 +36,7 @@ model.add(LSTM(5, input_length =3, input_dim= 1))                # input_length 
 model.add(Dense(3))   
 model.add(Dense(1))
 
-
+ 
 model.summary()
 '''
 LSTM_parameter 계산
