@@ -1,6 +1,6 @@
 # 1.데이터
 import numpy as np
-x = np.transpose(range(1, 101))
+x = np.transpose(range(1, 101))  #array를 쓰던 transpose를 쓰던 column이 하나면 동일하게 (100,) 로 나옴
 y = np.transpose([range(101, 201), range(711,811), range(100)])
 
 print(x.shape)
@@ -20,9 +20,9 @@ x_train, x_test, y_train, y_test = train_test_split(
 )
 
 
-
 print(x_train)
 print(x_test)
+
 # 2. 모델구성
 from keras.models import Sequential 
 from keras.layers import Dense
