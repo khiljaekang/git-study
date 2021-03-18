@@ -35,3 +35,4 @@ output = model.predict(x_test)
 print("결과물 : |n", output)
 
 
+ 
