@@ -33,8 +33,6 @@ model.add(Dense(3))
 model.add(Dense(2))
 model.add(Dense(1))
 
-
-
 #3.훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x_train, y_train, epochs=100, batch_size=1)
@@ -44,6 +42,11 @@ model.fit(x_train, y_train, epochs=100, batch_size=1)
 loss, mse = model.evaluate(x_test ,y_test, batch_size=1)
 print("loss :", loss)
 print("mse :", mse)
+
+# 한가지 데이터로만 학습을 계속하면 과적합(Overfitting)이 발생하여 일반화의 성능이 떨이짐.
+# 새로운 값(x_test)을 주어 비교하여 일반화 성능을 높임, 완전 새로운 값(x_predict)을 넣었을 때 좀 더 정확한 예측값이 나온다(y_predict)
+# 평가 데이터는 모델에 반영 안된다. 그래서 통상적으로 [train data > test data]
+'''
 
 y_pred = model.predict(x_pred)
 print("y_predict :", y_pred)
