@@ -40,7 +40,7 @@ model.add(Dense(1))
 model.summary()
 
 
-'''
+
 
 #3.훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
@@ -56,7 +56,7 @@ print("mse :", mse)
 # y_pred = model.predict(x_pred)
 # print("y_predict :", y_pred)
 
-y_predict = model.predict(x_test)
+y_predict = model.predict(x_test)   #눈으로 보기 위한 예측값
 print(y_predict)
 
 #RMSE 구하기
@@ -70,4 +70,4 @@ from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 :", r2)
 
-'''
+
