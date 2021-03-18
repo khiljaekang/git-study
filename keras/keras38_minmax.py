@@ -1,119 +1,94 @@
 '''
 # minmax_scalar   ( 정규화 )  =  ( x - min ) / ( max - min )
   : 0 ~ 1 사이의 값으로 변환   
-
 # standard_scalar ( 표준화 )  =  ( x - x평균) / x표준편차      
-  : 0을 기준으로 모임
-
+  : 0을 기준으로 모임 (정규분포 모양)
 # 표준편차 = [ sigma ( x - x평균)^2 ] / n        
 '''
 from numpy import array
 from keras.models import Model
 from keras.layers import Dense, LSTM, Input
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
-from keras.layers import Dense, Input
-from keras.callbacks import EarlyStopping
 
 # 1. 데이터
 x = array([[1,2,3],[2,3,4],[3,4,5],[4,5,6],            
            [5,6,7],[6,7,8],[7,8,9],[8,9,10],
            [9,10,11],[11,12,13],
-           [2000,3000,4000],[3000,4000,5000],[4000,5000,6000],
+           [2000,3000,4000],[3000,4000,5000],[4000,5000,6000],   # (14, 3) 
            [100, 200, 300]
           ])
 y = array([4,5,6,7,8,9,10,11,12,13,5000,6000,7000, 400])                      # (14, )   벡터
 
 x_predict = array([55, 65, 75])           # (3, )
-x_predict = x_predict.reshape(1,3)
 
-
-
-# print('x.shape : ',x.shape)               # (14, 3)
-# print('y.shape : ',y.shape)               # (14, ) != (14, 1)
+print('x.shape : ',x.shape)               # (14, 3)
+print('y.shape : ',y.shape)               # (14, ) != (14, 1)
                                           #  벡터      행렬
+x_predict = x_predict.reshape(1, 3)       # (1, 3, ) 도 가능하다 -> , 뒤에 값이 없어서
 
-
+##### MinMax_scaler , Standard_scaler ###### 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 # scaler = MinMaxScaler()
 scaler = StandardScaler()
-scaler.fit(x)
-x = scaler.transform(x)
-x_predict = scaler.transform(x_predict)
+scaler.fit(x)                             # 전처리 실행 : x를 넣어서 MinMax_scaler, Standard_scaler 실행하겠다.
+                                          #              scaler에 실행한 값 저장 ( x의 범위 )
+x = scaler.transform(x)                   # x의 모양을 MinMaxScaler을 실행한 값으로 바꿔주겠다.
+x_predict = scaler.transform(x_predict)   # x의 범위로 계산한 sclar 값에서 x_predict에 해당되는 값을 가져오겠다.
 print(x)
 print(x_predict)
 
+""" y는 전처리 변환을 안하는 이유 : x와 매칭되는 순서는 같기 때문
+ec)      x1  x2    x3    x4  ... x99   x100
+     ---------------------------------------
+     x = 1  2     3     4    ... 99    100
+scalar = 0  0.01  0.02  0.02 ... 0.99  1
+    ========================================
+     y = y1  y2    y3    y4  ... y99   y100
+"""
+                                          
 
 
+# x = x.reshape(14, 3, 1)
+x = x.reshape(x.shape[0], x.shape[1], 1)  # x.shape[0] = 14 / x.shape[1] = 3 / data 1개씩 작업 하겠다. 
+print(x.shape)                            # (14, 3, 1)    
 
-
-                                                # (13, ) != (13, 1)
-#                                           #  벡터      행렬
-
-# x = x.reshape(13, 3, 1)
-x = x.reshape(x.shape[0], x.shape[1], 1)  
-print(x.shape)                            
-# '''
-#                 행            열        몇개씩 자르는 지
-# x.shape = ( batch_size , time_steps , feature )
-# input_shape = (time_steps, feature )
-# input_length = timesteps
-# input_dim = feature
-#                  x      | y
-#             ---------------- 
-# batch_size   1   2   3  | 4     : x의 한 행에 들어간 값을 몇개씩 자르느냐 = feature
-#              2   3   4  | 5       ex) feature 1 : [1], [2], [3]
-#              3   4   5  | 6       ex) feature 3 : [1, 2, 3]
-#              4   5   6  | 7 
-#               time_step
-# '''
 
 #2. 모델구성
-model = Sequential()
-# model.add(LSTM(10, activation='relu', input_shape = (3, 1)))
-#input1 = Input(shape=(3,))
-'''
-input1 = Input(shape=(3, 1))
-dense1 = LSTM(10, return_sequences=  True)(input1 )
-dense2 = LSTM(10)(dense1)
-dense2 = Dense(5)(dense1)  #param이 55 = ( input_dim + 1 ) * output
-output1 = Dense(1)(dense2)
+
+input1 = Input(shape = (3, 1))
+
+LSTM1 = LSTM(1000, return_sequences= True)(input1)
+# LSTM2 = LSTM(10)(LSTM1, return_sequences= True)(LSTM1)  # return_sequences를 썼으면 무조건 LSTM사용
+LSTM2 = LSTM(500)(LSTM1)           
+dense1 = Dense(10)(LSTM2)        
+dense2 = Dense(10)(dense1)     
+dense2 = Dense(10)(dense2)   
+dense2 = Dense(10)(dense2)                     
+dense2 = Dense(10)(dense2)                     
+dense2 = Dense(10)(dense2)                     
+dense3 = Dense(10)(dense2)                     
+
+
+output1 = Dense(1)(dense3)
 
 model = Model(inputs = input1, outputs = output1)
-'''
-model = Sequential()
-model.add(LSTM(10, activation = 'relu', input_length = 3, input_dim = 1,
-               return_sequences = True)) 
-# 10은 아웃풋 10 ,output shape에서(none, 3, 10 ) 가 나왔음으로 그 다음에서는 10이 feature의 개수가 된다
-model.add(LSTM(10, return_sequences = False)) #input_dim * output) + (bias * output) + (output ^ 2) * 4
-model.add(Dense(5))
-model.add(Dense(1))
 
 model.summary()
 
 
-'''
-LSTM_parameter 계산
-num_params = 4 * ( num_units   +   input_dim   +   1 )  *  num_units
-                (output node값)  (잘라준 data)   (bias)  (output node값)
-           = 4 * (    5      +       1       +   1 )  *     5          = 140     
-                    역전파 : 나온 '출력' 값이 다시 '입력'으로 들어감(자귀회귀)
-'''
-
 
 # EarlyStopping
-# from keras.callbacks import EarlyStopping
-# es = EarlyStopping(monitor = 'loss', patience=100, mode = 'min')
+from keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor = 'loss', patience=100, mode = 'min')
+
 
 #3. 실행
-es = EarlyStopping(monitor = 'loss', mode = 'auto', patience = 10)
 model.compile(optimizer='adam', loss = 'mse')
-model.fit(x, y, epochs =1000, batch_size = 32,callbacks = [es]) #callbacks = [es] )                
+model.fit(x, y, epochs =10000, batch_size = 32,callbacks = [es] 
+          )                
 
 #4. 예측
-
-x_predict = x_predict.reshape(1, 3, 1)       # x값 (4, 3, 1)와 동일한 shape로 만들어 주기 위함
+x_predict = x_predict.reshape(1, 3, 1)   # x값 (14, 3, 1)와 동일한 shape로 만들어 주기 위함
                                          # (1, 3, 1) : 확인 1 * 3 * 1 = 3
 # x_predict = x_predict.reshape(1, x_predict.shape[0], 1)
 
@@ -121,4 +96,3 @@ print(x_predict)
 
 y_predict = model.predict(x_predict)
 print(y_predict)
-
