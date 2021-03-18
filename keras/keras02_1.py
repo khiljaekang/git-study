@@ -36,4 +36,4 @@ loss, acc = model.evaluate(x, y )
 print("acc :", acc)
 print("loss : ", loss)
 
-
+ 
