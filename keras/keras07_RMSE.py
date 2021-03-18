@@ -59,5 +59,5 @@ print("RMSE : ", RMSE(y_test, y_predict))
 # RMSE (Root Mean Squared Error, 평균 제곱근 오차) 
 # : root[sigma(실제값 - 예측값)^2 /n]
 # : MSE에 비해 에러값의 크기가 실제 값에 비례한다.(제곱된 것에 루트를 씌었기 때문)
-
+ 
 
