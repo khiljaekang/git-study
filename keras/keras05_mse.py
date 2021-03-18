@@ -28,6 +28,10 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 model.fit(x, y, epochs=30, batch_size=1)
 
+# 잘못된 점 : 훈련시킨 데이터로 평가함, 이렇게 하면 accuracy가 높아지거나 loss가 낮아짐 
+#                                   (이미 아는 답으로 문제를 풀기 때문, 과적화overfitting) 
+
+
 #4.평가, 예측
 
 loss, mse = model.evaluate(x ,y, batch_size=1)
