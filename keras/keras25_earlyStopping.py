@@ -73,7 +73,8 @@ model.summary()
 
 
 #3. 훈련
-es = EarlyStopping(monitor = 'loss', mode = 'min', patience = 10)
+##### Early Stopping #####
+es = EarlyStopping(monitor = 'loss', patience = 70, mode = 'min' , verbose: =1)   # 'loss'를 보겠다 /  70까진 참겠다 / 값을 최소화(max, auto)  / verbose : earlyStopping되는 epoch보여줌
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])  
 model.fit([x1_train, x2_train], 
           [y1_train ], epochs =500, batch_size =1,
