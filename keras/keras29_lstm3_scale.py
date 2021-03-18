@@ -15,21 +15,19 @@ print('y.shape : ',y.shape)               # (13, ) != (13, 1)
                                           #  벡터      행렬
 
 # x = x.reshape(13, 3, 1)
-x = x.reshape(x.shape[0], x.shape[1], 1)  
-print(x.shape)                            
+x = x.reshape(x.shape[0], x.shape[1], 1)  # x.shape[0] = 13 / x.shape[1] = 3 / data 1개씩 작업 하겠다. 
+print(x.shape)                            # (13, 3, 1)      / rehape확인 : 모든 값을 곱해서 맞으면 똑같은 거임                           
 '''
                 행            열        몇개씩 자르는 지
 x.shape = ( batch_size , time_steps , feature )
+
 input_shape = (time_steps, feature )
+
 input_length = timesteps
+
 input_dim = feature
-                 x      | y
-            ---------------- 
-batch_size   1   2   3  | 4     : x의 한 행에 들어간 값을 몇개씩 자르느냐 = feature
-             2   3   4  | 5       ex) feature 1 : [1], [2], [3]
-             3   4   5  | 6       ex) feature 3 : [1, 2, 3]
-             4   5   6  | 7 
-              time_step
+
+
 '''
 
 #2. 모델구성
@@ -47,13 +45,7 @@ model.add(Dense(1))
 
 
 model.summary()
-'''
-LSTM_parameter 계산
-num_params = 4 * ( num_units   +   input_dim   +   1 )  *  num_units
-                (output node값)  (잘라준 data)   (bias)  (output node값)
-           = 4 * (    5      +       1       +   1 )  *     5          = 140     
-                    역전파 : 나온 '출력' 값이 다시 '입력'으로 들어감(자귀회귀)
-'''
+
 
 
 # EarlyStopping
