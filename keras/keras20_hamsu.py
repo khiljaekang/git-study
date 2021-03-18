@@ -18,8 +18,8 @@ print(x_train)
 print(x_test)
 
 #2.모델구성
-from keras.models import Sequential, Model
-from keras.layers import Dense, Input
+from keras.models import Sequential, Model   #함수형 모델 가져오기 : Model
+from keras.layers import Dense, Input        #함수형 모델은 input layer 명시해야 함
 
 # model = Sequential()
 # model.add(Dense(5, input_dim= 3))
@@ -29,17 +29,19 @@ from keras.layers import Dense, Input
 #함수형 모델은 인풋이 뭔지 아웃풋이 뭔지 명시해줘야함
 #변수명은 소문자로 한다는 우리끼리의 약속
 
-input1 = Input(shape=(3,))
-dense1 = Dense(5, activation= 'relu')(input1)
+input1 = Input(shape=(3,))                        # input layer : 함수형 모델에서는 shape 사용, 행을 뺀 나머지 부분 
+dense1 = Dense(5, activation= 'relu')(input1)     # 함수형은 input이 무엇인지 명시해야함 :input1
 dense1 = Dense(5, activation= 'relu')(input1)
 dense1 = Dense(5, activation= 'relu')(input1)
 dense1 = Dense(5, activation= 'relu')(input1)
 dense1 = Dense(5, activation= 'relu')(input1)
 dense1 = Dense(5, activation= 'relu')(input1)
 dense2 = Dense(4, activation= 'relu')(dense1)
-output1 = Dense(1)(dense2)
+output1 = Dense(1)(dense2)                        # output layer
 
-model = Model(inputs = input1, outputs = output1)
+model = Model(inputs = input1, outputs = output1) # 함수형 모델이라고 정의 / 시퀀스 모델의 경우 ex) model = Sequential()
+                                                  # inputs = input layer이름
+                                                  # outputs = output layer 이름
 
 model.summary()
 
