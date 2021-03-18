@@ -1,7 +1,7 @@
 '''
 <앙상블> 
 : 각자 모델을 훈련시키고 합치는 것 
-'''
+''' 
 #1. 데이터
 import numpy as np
 x1 = np.transpose([range(1, 101), range(311, 411),range(411,511)])  
