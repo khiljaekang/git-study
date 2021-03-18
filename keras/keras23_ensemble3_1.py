@@ -117,5 +117,5 @@ r2_1 = r2_score(y1_test, y1_predict)
 print("R2_1 : ", r2_1)
 
 '''
-
+ 
 
