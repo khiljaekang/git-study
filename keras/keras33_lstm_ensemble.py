@@ -101,4 +101,4 @@ x2_predict = x2_predict.reshape(1, 3, 1)
 # print(x1_predict)
 
 y_predict = model.predict([x1_predict, x2_predict])
-print(y_predict)
+print(y_predict) 
