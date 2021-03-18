@@ -66,3 +66,6 @@ print(x_predict)
 
 y_predict = model.predict(x_predict)
 print(y_predict)
+
+#데이터 양이 적을 때는, 매개 변수의 양이 적은 GRU가 조금 더 낫고, 데이터 양이 더 많으면 LSTM이 더 낫다고 알려져 있습니다.
+#GRU보다 LSTM에 대한 연구나 사용량이 더 많은데, 이는 LSTM이 더 먼저 나온 구조이기 때문입니다.
