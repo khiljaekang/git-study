@@ -75,4 +75,4 @@ print(x_predict)
 
 y_predict = model.predict(x_predict)
 print(y_predict)
-
+ 
