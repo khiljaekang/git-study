@@ -84,3 +84,4 @@ print("RMSE : ", RMSE(y_test, y_predict))
 from sklearn.metrics import r2_score
 r2 = r2_score(y_test, y_predict)
 print("R2 : ", r2)
+ 
