@@ -25,3 +25,4 @@ def exchange(S):
         for j in range(i + 1, n):   #(i+1 , n-1)
             if (S[i] > S[j]):
                 S[i], S[j] = S[j], S[i]    #swap   
+ 
