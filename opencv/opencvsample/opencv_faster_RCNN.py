@@ -55,4 +55,4 @@ for detection in cv_out[0,0,:,:]:
 img_rgb = cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB)
 
 plt.figure(figsize=(12, 12))
-plt.imshow(img_rgb)
+plt.imshow(img_rgb)  
