@@ -26,3 +26,4 @@ def exchange(S):
             if (S[i] > S[j]):
                 S[i], S[j] = S[j], S[i]    #swap   
  
+
